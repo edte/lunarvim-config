@@ -40,17 +40,66 @@ lvim.plugins = {
 
 	-------------------------------------------------------vim 基础功能增强-------------------------------------------------------------------------------------
 	-- -- 查看 Vim 标记并与之交互的用户体验更好。
-	-- {
-	-- 	"chentoast/marks.nvim",
-	-- 	event = "VeryLazy",
-	-- 	config = function()
-	-- 		local r = try_require("text.mark")
-	-- 		if r ~= nil then
-	-- 			r.marksConfig()
-	-- 		end
-	-- 	end,
-	-- },
+	{
+		"chentoast/marks.nvim",
+		event = "VeryLazy",
+		config = function()
+			local r = try_require("text.mark")
+			if r ~= nil then
+				r.marksConfig()
+			end
+		end,
+	},
 
+	-- 文件mark，按git隔离
+	-- 保存目录 /Users/edte/.cache/lvim/arrow
+	{
+		"otavioschwanck/arrow.nvim",
+		event = "VeryLazy",
+		opts = {
+			show_icons = true,
+			leader_key = "`", -- Recommended to be a single key
+			-- buffer_leader_key = "m", -- Per Buffer Mappings
+			index_keys = "123456789zxcbnmZXVBNM,afghjklAFGHJKLwrtyuiopWRTYUIOP", -- keys mapped to bookmark index, i.e. 1st bookmark will be accessible by 1, and 12th - by c
+			save_key = "cwd", -- what will be used as root to save the bookmarks. Can be also `git_root`.
+			hide_handbook = true,
+			always_show_path = true,
+		},
+	},
+
+	-- echo stdpath("data")
+	-- ~/.local/share/nvim/bookmarks/
+	{
+		"crusj/bookmarks.nvim",
+		branch = "main",
+		dependencies = { "nvim-web-devicons" },
+		config = function()
+			require("bookmarks").setup({})
+			require("telescope").load_extension("bookmarks")
+
+			lvim.builtin.which_key.mappings["mm"] = {
+				"<cmd>lua require'bookmarks'.add_bookmarks(fasle)<cr>",
+				"mark",
+			}
+
+			lvim.builtin.which_key.mappings["md"] = {
+				"<cmd>lua require'bookmarks.list'.delete_on_virt()<cr>",
+				"delete",
+			}
+
+			-- lvim.builtin.which_key.mappings["mo"] = {
+			-- 	"<cmd>lua require'bookmarks'.toggle_bookmarks()<cr>",
+			-- 	"Goto",
+			-- }
+
+			lvim.builtin.which_key.mappings["mo"] = {
+				"<cmd>Telescope bookmarks<cr>",
+				"Goto",
+			}
+		end,
+	},
+
+	-- 不支持按自动项目隔离，
 	-- {
 	-- 	"LintaoAmons/bookmarks.nvim",
 	-- 	-- tag = "v0.5.4", -- optional, pin the plugin at specific version for stability
@@ -59,27 +108,60 @@ lvim.plugins = {
 	-- 		{ "stevearc/dressing.nvim" }, -- optional: to have the same UI shown in the GIF
 	-- 	},
 	-- 	config = function()
-	-- 		require("bookmarks").setup({
-	-- 			sign_priority = 8, --set bookmark sign priority to cover other sign
-	-- 			save_file = vim.fn.expand("$HOME/.bookmarks"), -- bookmarks save file path
-	-- 			keywords = {
-	-- 				["@t"] = " ",
-	-- 				["@m"] = " ",
-	-- 				["@i"] = " ", --☑️ mark annotation startswith @t ,signs this icon as `Todo`
-	-- 				["@w"] = " ", -- mark annotation startswith @w ,signs this icon as `Warn`
-	-- 				["@f"] = " ", --⛏ mark annotation startswith @f ,signs this icon as `Fix`
-	-- 				["@n"] = " ", -- mark annotation startswith @n ,signs this icon as `Note`
-	-- 			},
-	-- 			on_attach = function(bufnr)
-	-- 				local bm = require("bookmarks")
-	-- 				local map = vim.keymap.set
-	-- 				map("n", "mm", bm.bookmark_toggle) -- add or remove bookmark at current line
-	-- 				map("n", "mi", bm.bookmark_ann) -- add or edit mark annotation at current line
-	-- 				map("n", "mc", bm.bookmark_clean) -- clean all marks in local buffer
-	-- 				map("n", "mn", bm.bookmark_next) -- jump to next mark in local buffer
-	-- 				map("n", "mp", bm.bookmark_prev) -- jump to previous mark in local buffer
-	-- 				map("n", "ml", ":Telescope bookmarks list<cr>") -- show marked file list in quickfix window
-	-- 				map("n", "mx", bm.bookmark_clear_all) -- removes all bookmarks
+	-- 		function Call_bookmark_command(cmd)
+	-- 			if cmd == "" then
+	-- 				print("empty")
+	-- 				return
+	-- 			end
+	-- 			local commands = require("bookmarks.adapter.commands").commands
+	-- 			local command
+	-- 			for _, c in ipairs(commands) do
+	-- 				if c.name == cmd then -- change it to one of the command above
+	-- 					command = c
+	-- 				end
+	-- 			end
+
+	-- 			if command then
+	-- 				command.callback()
+	-- 			end
+	-- 		end
+
+	-- 		lvim.builtin.which_key.mappings["ms"] = {
+	-- 			"<cmd>lua Call_bookmark_command('[List] set active')<cr>",
+	-- 			"set active project",
+	-- 		}
+
+	-- 		lvim.builtin.which_key.mappings["mr"] = {
+	-- 			"<cmd>lua Call_bookmark_command('[Mark] rename bookmark')<cr>",
+	-- 			"rename",
+	-- 		}
+
+	-- 		lvim.builtin.which_key.mappings["md"] = {
+	-- 			"<cmd>lua Call_bookmark_command('[Mark] delete bookmark')<cr>",
+	-- 			"delete",
+	-- 		}
+
+	-- 		lvim.builtin.which_key.mappings["mm"] = {
+	-- 			"<cmd>BookmarksMark<cr>",
+	-- 			"mark",
+	-- 		}
+	-- 		lvim.builtin.which_key.mappings["mo"] = {
+	-- 			"<cmd>BookmarksGoto<cr>",
+	-- 			"Goto",
+	-- 		}
+	-- 		lvim.builtin.which_key.mappings["mc"] = {
+	-- 			"<cmd>BookmarksCommands<cr>",
+	-- 			"commands",
+	-- 		}
+	-- 		lvim.builtin.which_key.mappings["me"] = {
+	-- 			"<cmd>BookmarksGotoRecent<cr>",
+	-- 			"latest",
+	-- 		}
+
+	-- 		autocmd({ "VimEnter" }, {
+	-- 			pattern = "*",
+	-- 			callback = function()
+	-- 				local projectName = vim.fn.getcwd()
 	-- 			end,
 	-- 		})
 	-- 	end,
@@ -272,20 +354,6 @@ lvim.plugins = {
 	-- 	},
 	-- },
 
-	-- 文件mark，按git隔离
-	-- 保存目录 /Users/edte/.cache/lvim/arrow
-	{
-		"otavioschwanck/arrow.nvim",
-		event = "VeryLazy",
-		opts = {
-			show_icons = true,
-			leader_key = "`", -- Recommended to be a single key
-			buffer_leader_key = "m", -- Per Buffer Mappings
-			index_keys = "123456789zxcbnmZXVBNM,afghjklAFGHJKLwrtyuiopWRTYUIOP", -- keys mapped to bookmark index, i.e. 1st bookmark will be accessible by 1, and 12th - by c
-			save_key = "cwd", -- what will be used as root to save the bookmarks. Can be also `git_root`.
-		},
-	},
-
 	--HACK:
 	--TODO:
 	--FIX:
@@ -373,8 +441,6 @@ lvim.plugins = {
 			vim.g.netrw_nogx = 1 -- disable netrw gx
 		end,
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = true, -- default settings
-
 		-- you can specify also another config if you want
 		config = function()
 			try_require("gx").setup({
@@ -389,7 +455,7 @@ lvim.plugins = {
 				},
 				handler_options = {
 					search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
-					search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
+					-- search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
 				},
 			})
 		end,
@@ -600,27 +666,28 @@ lvim.plugins = {
 	{ "junegunn/fzf" },
 	{ "junegunn/fzf.vim" },
 
-	-- 将当前工作目录更改为项目的根目录。
-	{
-		"ahmedkhalf/lsp-rooter.nvim",
-		event = "bufread",
-		config = function()
-			require("lsp-rooter").setup()
-		end,
-	},
+	-- -- 将当前工作目录更改为项目的根目录。
+	-- 和arrow插件冲突
+	-- {
+	-- 	"ahmedkhalf/lsp-rooter.nvim",
+	-- 	event = "bufread",
+	-- 	config = function()
+	-- 		require("lsp-rooter").setup()
+	-- 	end,
+	-- },
 
-	-- 提供 project 支持
-	{
-		"nvim-telescope/telescope-project.nvim",
-		event = "VeryLazy",
-	},
+	-- -- 提供 project 支持
+	-- {
+	-- 	"nvim-telescope/telescope-project.nvim",
+	-- 	event = "VeryLazy",
+	-- },
 
-	{
-		"nvim-telescope/telescope.nvim",
-		tag = "0.1.8",
-		-- or                              , branch = '0.1.x',
-		dependencies = { "nvim-lua/plenary.nvim" },
-	},
+	-- {
+	-- 	"nvim-telescope/telescope.nvim",
+	-- 	tag = "0.1.8",
+	-- 	-- or                              , branch = '0.1.x',
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- },
 
 	-- -------------------------------------------------------------语言相关---------------------------------------------------------------------------------------
 

@@ -9,6 +9,7 @@
 -- lvim.colorscheme = "gruvbox"
 -- lvim.colorscheme = "github_dark_dimmed"
 -- lvim.colorscheme = "catppuccin-macchiato"
+-- lvim.colorscheme = "onedark"
 
 -- try_require('onedark').load()
 
