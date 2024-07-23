@@ -1,22 +1,4 @@
-[
-  {
-    "bookmarks": [
-      {
-        "content": "\t\t\t\tr.symbolsConfig()",
-        "created_at": 1721125410,
-        "githash": "致命错误：不是 git 仓库（或者任何父目录）：.git",
-        "id": 1721125410,
-        "location": {
-          "col": 1,
-          "line": 13,
-          "path": "/Users/edte/.config/lvim/lua/plugins.lua"
-        },
-        "name": "m",
-        "visited_at": 1721125423
-      }
-    ],
-    "id": "2024071618233023688090",
-    "is_active": true,
-    "name": "Default"
-  }
-]
+{
+  "bookmark_lists": [],
+  "projects": []
+}

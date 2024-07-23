@@ -8,7 +8,7 @@ vim.opt.termguicolors = true
 
 lvim.builtin.nvimtree.setup.disable_netrw = false
 
--- lvim.builtin.nvimtree.active = false
+lvim.builtin.nvimtree.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
@@ -24,6 +24,14 @@ function ToggleMiniFiles()
 		mf.reveal_cwd()
 	end
 end
+
+-- 火焰图排查
+-- require'plenary.profile'.start("profile.log", {flame = true})
+-- require'plenary.profile'.stop()
+-- /Users/edte/go/src/test/FlameGraph/flamegraph.pl profile.log  > example.svg
+
+
+
 
 -- preview tree
 local M = {}

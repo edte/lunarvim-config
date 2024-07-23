@@ -139,3 +139,5 @@ create_cmd("BufferDelete", function()
 end, { desc = "Delete the current Buffer while maintaining the window layout" })
 
 keymap("n", "gh", "<CMD>ClangdSwitchSourceHeader<CR>")
+
+cmd("command! Pwd lua print(vim.fn.getcwd())")

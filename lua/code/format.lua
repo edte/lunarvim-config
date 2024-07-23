@@ -4,7 +4,7 @@ local M = {}
 
 function M.formatConfig()
     -- 保存文件时格式化
-    lvim.format_on_save.enabled = false
+    lvim.format_on_save.enabled = true
     lvim.format_on_save.pattern =
     { "*.lua", "*.py", "*.c", "*.json", "*.js", "*.css", "*.html", "*.vue", "*.jce", "*.proto", "*.go" }
 
