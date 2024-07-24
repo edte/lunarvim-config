@@ -4,39 +4,26 @@ lvim.plugins = {
 	--------------------------------------------ui相关------------------------------------------------------------------------------------------------
 	-- 符号树状视图,按 S
 	{
-		"simrat39/symbols-outline.nvim",
-		opts = {},
-		event = "VeryLazy",
-		config = function()
-			local r = try_require("components.tree")
-			if r ~= nil then
-				r.symbolsConfig()
-			end
-		end,
+		"hedyhli/outline.nvim",
+		lazy = true,
+		cmd = { "Outline", "OutlineOpen" },
+		keys = { -- Example mapping to toggle outline
+			{ "S", "<cmd>Outline<CR>", desc = "Toggle outline" },
+		},
+		opts = {
+			outline_window = {
+				auto_close = false,
+				auto_jump = true,
+				show_numbers = false,
+				-- width = 20,
+				-- wrap = true,
+			},
+			outline_items = {
+				show_symbol_lineno = true,
+				show_symbol_details = true,
+			},
+		},
 	},
-
-	-- -- 类似 VS Code 的 winbar
-	-- -- navic 显示文件名
-	-- {
-	-- 	"utilyre/barbecue.nvim",
-	-- 	name = "barbecue",
-	-- 	version = "*",
-	-- 	dependencies = {
-	-- 		"SmiteshP/nvim-navic",
-	-- 		"nvim-tree/nvim-web-devicons", -- optional dependency
-	-- 	},
-	-- 	opts = {
-	-- 		-- configurations go here
-	-- 	},
-	-- },
-
-	-- -- 用lua编写的平滑滚动neovim插件
-	-- {
-	-- 	"karb94/neoscroll.nvim",
-	-- 	config = function()
-	-- 		try_require("neoscroll").setup({})
-	-- 	end,
-	-- },
 
 	-------------------------------------------------------vim 基础功能增强-------------------------------------------------------------------------------------
 	-- -- 查看 Vim 标记并与之交互的用户体验更好。
@@ -74,7 +61,14 @@ lvim.plugins = {
 		branch = "main",
 		dependencies = { "nvim-web-devicons" },
 		config = function()
-			require("bookmarks").setup({})
+			require("bookmarks").setup({
+				storage_dir = "", -- Default path: vim.fn.stdpath("data").."/bookmarks,  if not the default directory, should be absolute path",
+				mappings_enabled = true, -- If the value is false, only valid for global keymaps: toggle、add、delete_on_virt、show_desc
+				keymap = {
+					toggle = " mt", -- Toggle bookmarks(global keymap)
+					close = "<esc>", -- close bookmarks (buf keymap)
+				},
+			})
 			require("telescope").load_extension("bookmarks")
 
 			lvim.builtin.which_key.mappings["mm"] = {
@@ -99,74 +93,6 @@ lvim.plugins = {
 		end,
 	},
 
-	-- 不支持按自动项目隔离，
-	-- {
-	-- 	"LintaoAmons/bookmarks.nvim",
-	-- 	-- tag = "v0.5.4", -- optional, pin the plugin at specific version for stability
-	-- 	dependencies = {
-	-- 		{ "nvim-telescope/telescope.nvim" },
-	-- 		{ "stevearc/dressing.nvim" }, -- optional: to have the same UI shown in the GIF
-	-- 	},
-	-- 	config = function()
-	-- 		function Call_bookmark_command(cmd)
-	-- 			if cmd == "" then
-	-- 				print("empty")
-	-- 				return
-	-- 			end
-	-- 			local commands = require("bookmarks.adapter.commands").commands
-	-- 			local command
-	-- 			for _, c in ipairs(commands) do
-	-- 				if c.name == cmd then -- change it to one of the command above
-	-- 					command = c
-	-- 				end
-	-- 			end
-
-	-- 			if command then
-	-- 				command.callback()
-	-- 			end
-	-- 		end
-
-	-- 		lvim.builtin.which_key.mappings["ms"] = {
-	-- 			"<cmd>lua Call_bookmark_command('[List] set active')<cr>",
-	-- 			"set active project",
-	-- 		}
-
-	-- 		lvim.builtin.which_key.mappings["mr"] = {
-	-- 			"<cmd>lua Call_bookmark_command('[Mark] rename bookmark')<cr>",
-	-- 			"rename",
-	-- 		}
-
-	-- 		lvim.builtin.which_key.mappings["md"] = {
-	-- 			"<cmd>lua Call_bookmark_command('[Mark] delete bookmark')<cr>",
-	-- 			"delete",
-	-- 		}
-
-	-- 		lvim.builtin.which_key.mappings["mm"] = {
-	-- 			"<cmd>BookmarksMark<cr>",
-	-- 			"mark",
-	-- 		}
-	-- 		lvim.builtin.which_key.mappings["mo"] = {
-	-- 			"<cmd>BookmarksGoto<cr>",
-	-- 			"Goto",
-	-- 		}
-	-- 		lvim.builtin.which_key.mappings["mc"] = {
-	-- 			"<cmd>BookmarksCommands<cr>",
-	-- 			"commands",
-	-- 		}
-	-- 		lvim.builtin.which_key.mappings["me"] = {
-	-- 			"<cmd>BookmarksGotoRecent<cr>",
-	-- 			"latest",
-	-- 		}
-
-	-- 		autocmd({ "VimEnter" }, {
-	-- 			pattern = "*",
-	-- 			callback = function()
-	-- 				local projectName = vim.fn.getcwd()
-	-- 			end,
-	-- 		})
-	-- 	end,
-	-- },
-
 	-- 使用“.”启用重复支持的插件映射
 	{
 		"tpope/vim-repeat",
@@ -176,7 +102,7 @@ lvim.plugins = {
 	-- 增强 Neovim 中宏的使用。
 	{
 		"chrisgrieser/nvim-recorder",
-		event = "VeryLazy",
+		event = "RecordingEnter",
 		keys = {
 			-- these must match the keys in the mapping config below
 			{ "q", desc = " Start Recording" },
@@ -304,56 +230,6 @@ lvim.plugins = {
 		end,
 	},
 
-	-- 类似arrow
-	-- {
-	-- 	"theprimeagen/harpoon",
-	-- 	branch = "harpoon2",
-	-- 	dependencies = { "nvim-lua/plenary.nvim" },
-	-- 	config = function()
-	-- 		local harpoon = require("harpoon")
-	-- 		harpoon:setup()
-	-- 		vim.keymap.set("n", "<leader>A", function()
-	-- 			harpoon:list():add()
-	-- 		end)
-	-- 		vim.keymap.set("n", "<leader>a", function()
-	-- 			harpoon.ui:toggle_quick_menu(harpoon:list())
-	-- 		end)
-
-	-- 		-- basic telescope configuration
-	-- 		local conf = require("telescope.config").values
-	-- 		local function toggle_telescope(harpoon_files)
-	-- 			local file_paths = {}
-	-- 			for _, item in ipairs(harpoon_files.items) do
-	-- 				table.insert(file_paths, item.value)
-	-- 			end
-
-	-- 			require("telescope.pickers")
-	-- 				.new({}, {
-	-- 					prompt_title = "Harpoon",
-	-- 					finder = require("telescope.finders").new_table({
-	-- 						results = file_paths,
-	-- 					}),
-	-- 					previewer = conf.file_previewer({}),
-	-- 					sorter = conf.generic_sorter({}),
-	-- 				})
-	-- 				:find()
-	-- 		end
-
-	-- 		vim.keymap.set("n", "<leader>a", function()
-	-- 			toggle_telescope(harpoon:list())
-	-- 		end, { desc = "Open harpoon window" })
-	-- 	end,
-	-- },
-
-	-- {
-	-- 	"LintaoAmons/bookmarks.nvim",
-	-- 	-- tag = "v0.5.4", -- optional, pin the plugin at specific version for stability
-	-- 	dependencies = {
-	-- 		{ "nvim-telescope/telescope.nvim" },
-	-- 		{ "stevearc/dressing.nvim" }, -- optional: to have the same UI shown in the GIF
-	-- 	},
-	-- },
-
 	--HACK:
 	--TODO:
 	--FIX:
@@ -388,6 +264,7 @@ lvim.plugins = {
 	},
 
 	-- 长按j k 加速
+	-- 卡顿
 	{
 		"rainbowhxch/accelerated-jk.nvim",
 		event = "VeryLazy",
@@ -432,121 +309,84 @@ lvim.plugins = {
 		end,
 	},
 
-	-- gx 打开 URL
-	{
-		"chrishrb/gx.nvim",
-		keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
-		cmd = { "Browse" },
-		init = function()
-			vim.g.netrw_nogx = 1 -- disable netrw gx
-		end,
-		dependencies = { "nvim-lua/plenary.nvim" },
-		-- you can specify also another config if you want
-		config = function()
-			try_require("gx").setup({
-				open_browser_app = "open", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
-				open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
-				handlers = {
-					plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
-					github = true, -- open github issues
-					brewfile = true, -- open Homebrew formulaes and casks
-					package_json = true, -- open dependencies from package.json
-					search = true, -- search the web/selection on the web if nothing else is found
-				},
-				handler_options = {
-					search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
-					-- search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
-				},
-			})
-		end,
-	},
-
-	-- -- 用于对齐线的 NeoVim 的最小插件
-	-- -- 用于无lsp和null的一些文本
+	-- -- gx 打开 URL
 	-- {
-	-- 	"Vonr/align.nvim",
-	-- 	branch = "v2",
-	-- 	lazy = true,
+	-- 	"chrishrb/gx.nvim",
+	-- 	keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" } } },
+	-- 	cmd = { "Browse" },
 	-- 	init = function()
-	-- 		local r = try_require("text.align")
-	-- 		if r ~= nil then
-	-- 			r.aliginConfig()
-	-- 		end
+	-- 		vim.g.netrw_nogx = 1 -- disable netrw gx
 	-- 	end,
-	-- 	event = "VeryLazy",
+	-- 	dependencies = { "nvim-lua/plenary.nvim" },
+	-- 	-- you can specify also another config if you want
+	-- 	config = function()
+	-- 		try_require("gx").setup({
+	-- 			open_browser_app = "open", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
+	-- 			open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
+	-- 			handlers = {
+	-- 				plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
+	-- 				github = true, -- open github issues
+	-- 				brewfile = true, -- open Homebrew formulaes and casks
+	-- 				package_json = true, -- open dependencies from package.json
+	-- 				search = true, -- search the web/selection on the web if nothing else is found
+	-- 			},
+	-- 			handler_options = {
+	-- 				search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
+	-- 				-- search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
+	-- 			},
+	-- 		})
+	-- 	end,
 	-- },
 
 	-- ----------------------------------------------------------cmp--------------------------------------------------------------------------------------------------
-
-	-- 上下文语法补全
-	{
-		"ray-x/cmp-treesitter",
-		event = "VeryLazy",
-		config = function()
-			local r = try_require("code.completion")
-			if r ~= nil then
-				r.cmpConfig()
-			end
-
-			local m = try_require("code.lsp")
-			if m ~= nil then
-				m.lspConfig()
-			end
-
-			local n = try_require("code.format")
-			if n ~= nil then
-				n.formatConfig()
-			end
-		end,
-	},
 
 	-- TabNine ai 补全
 	{
 		"tzachar/cmp-tabnine",
 		build = "./install.sh",
 		dependencies = "hrsh7th/nvim-cmp",
-		event = "VeryLazy",
+		event = "BufRead",
 	},
 
 	-- 单词补全
 	{
 		"uga-rosa/cmp-dictionary",
-		event = "VeryLazy",
+		event = "BufRead",
 	},
 
 	-- 计算器
 	{
 		"hrsh7th/cmp-calc",
-		event = "VeryLazy",
+		event = "BufRead",
 	},
 
 	-- nvim-cmp 表情符号源
 	-- : 冒号触发
 	{
 		"hrsh7th/cmp-emoji",
-		event = "VeryLazy",
+		event = "BufRead",
 	},
 
 	-- nvim lua 的 nvim-cmp 源
 	{
 		"hrsh7th/cmp-nvim-lua",
-		event = "VeryLazy",
+		event = "BufRead",
 	},
 
 	{
 		"tzachar/cmp-fuzzy-path",
-		event = "VeryLazy",
+		event = "BufRead",
 		dependencies = { "tzachar/fuzzy.nvim" },
 	},
 	{
 		"tzachar/cmp-fuzzy-buffer",
-		event = "VeryLazy",
+		event = "BufRead",
 		dependencies = { "tzachar/fuzzy.nvim" },
 	},
 
 	-- {
 	-- 	"tzachar/cmp-ai",
-	-- 	event = "VeryLazy",
+	-- event = "BufRead",
 	-- 	dependencies = "nvim-lua/plenary.nvim",
 	-- },
 
@@ -624,7 +464,7 @@ lvim.plugins = {
 	-- Clanalphagd 针对 neovim 的 LSP 客户端的不合规范的功能。使用 https://sr.ht/~p00f/clangd_extensions.nvim 代替
 	{
 		"p00f/clangd_extensions.nvim",
-		event = "VeryLazy",
+		event = "BufRead *.cpp",
 	},
 
 	-- wilder.nvim 插件，用于命令行补全，和 noice.nvim 冲突
@@ -648,10 +488,10 @@ lvim.plugins = {
 		event = "VeryLazy",
 	},
 
-	{
-		"edte/copilot",
-		event = "VeryLazy",
-	},
+	-- {
+	-- 	"edte/copilot",
+	-- 	event = "VeryLazy",
+	-- },
 
 	-- {
 	-- 	"edte/copilot-cmp",
@@ -665,29 +505,6 @@ lvim.plugins = {
 	-- 第一个别删
 	{ "junegunn/fzf" },
 	{ "junegunn/fzf.vim" },
-
-	-- -- 将当前工作目录更改为项目的根目录。
-	-- 和arrow插件冲突
-	-- {
-	-- 	"ahmedkhalf/lsp-rooter.nvim",
-	-- 	event = "bufread",
-	-- 	config = function()
-	-- 		require("lsp-rooter").setup()
-	-- 	end,
-	-- },
-
-	-- -- 提供 project 支持
-	-- {
-	-- 	"nvim-telescope/telescope-project.nvim",
-	-- 	event = "VeryLazy",
-	-- },
-
-	-- {
-	-- 	"nvim-telescope/telescope.nvim",
-	-- 	tag = "0.1.8",
-	-- 	-- or                              , branch = '0.1.x',
-	-- 	dependencies = { "nvim-lua/plenary.nvim" },
-	-- },
 
 	-- -------------------------------------------------------------语言相关---------------------------------------------------------------------------------------
 
@@ -721,7 +538,7 @@ lvim.plugins = {
 	-- jce 高亮
 	{
 		"edte/jce-highlight",
-		event = "VeryLazy",
+		event = "BufRead *.jce",
 		ft = { "jce" },
 	},
 
@@ -757,7 +574,7 @@ lvim.plugins = {
 			end
 		end,
 
-		event = { "CmdlineEnter" },
+		event = "BufRead *.go",
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
@@ -766,7 +583,7 @@ lvim.plugins = {
 	{
 		"fabridamicelli/cronex.nvim",
 		opts = {},
-		event = "VeryLazy",
+		event = "BufRead *.go",
 		config = function()
 			local r = try_require("text.cron")
 			if r ~= nil then
@@ -774,16 +591,6 @@ lvim.plugins = {
 			end
 		end,
 	},
-
-	-- -- {
-	-- -- 	"iamcco/markdown-preview.nvim",
-	-- -- 	cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-	-- -- 	build = "cd app && yarn install",
-	-- -- 	init = function()
-	-- -- 		vim.g.mkdp_filetypes = { "markdown" }
-	-- -- 	end,
-	-- -- 	ft = { "markdown" },
-	-- -- },
 
 	-- 翻译插件
 	{
@@ -1019,27 +826,28 @@ lvim.plugins = {
 	-- },
 
 	-- Neovim 插件添加了对使用内置 LSP 的文件操作的支持
-	-- {
-	-- 	"antosha417/nvim-lsp-file-operations",
-	-- 	dependencies = {
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"nvim-tree/nvim-tree.lua",
-	-- 	},
-	-- 	config = function()
-	-- 		require("lsp-file-operations").setup()
+	{
+		"antosha417/nvim-lsp-file-operations",
+		event = "BufRead *.vue",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-tree.lua",
+		},
+		config = function()
+			require("lsp-file-operations").setup()
 
-	-- 		local lspconfig = require("lspconfig")
-	-- 		lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
-	-- 			capabilities = vim.tbl_deep_extend(
-	-- 				"force",
-	-- 				vim.lsp.protocol.make_client_capabilities(),
-	-- 				--     -- returns configured operations if setup() was already called
-	-- 				--     -- or default operations if not
-	-- 				require("lsp-file-operations").default_capabilities()
-	-- 			),
-	-- 		})
-	-- 	end,
-	-- },
+			local lspconfig = require("lspconfig")
+			lspconfig.util.default_config = vim.tbl_extend("force", lspconfig.util.default_config, {
+				capabilities = vim.tbl_deep_extend(
+					"force",
+					vim.lsp.protocol.make_client_capabilities(),
+					--     -- returns configured operations if setup() was already called
+					--     -- or default operations if not
+					require("lsp-file-operations").default_capabilities()
+				),
+			})
+		end,
+	},
 
 	{
 		"echasnovski/mini.files",
@@ -1059,6 +867,214 @@ lvim.plugins = {
 						mf.reveal_cwd()
 					end
 				end,
+			},
+		},
+	},
+
+	{
+		"MeanderingProgrammer/markdown.nvim",
+		event = "BufRead *.md",
+		main = "render-markdown",
+		ft = { "md" },
+		opts = {
+			file_types = { "markdown" },
+		},
+		name = "render-markdown", -- Only needed if you have another plugin named markdown.nvim
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+	},
+
+	-- 显示图片，和markdown.nvim一起使用，但是现在和tmux不兼容，切不同窗口图片都还在，故先注释掉
+	-- -- lazy snippet
+	-- {
+	-- 	"3rd/image.nvim",
+	-- 	-- cond = false,
+	-- 	-- ft = { "markdown", "norg", "image_nvim" },
+	-- 	build = "luarocks --local install magick --lua-version 5.1",
+	-- 	config = function()
+	-- 		package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?/init.lua"
+	-- 		package.path = package.path .. ";" .. vim.fn.expand("$HOME") .. "/.luarocks/share/lua/5.1/?.lua"
+
+	-- 		require("image").setup({
+	-- 			backend = "kitty",
+	-- 			-- backend = "ueberzug",
+	-- 			integrations = {
+	-- 				markdown = {
+	-- 					enabled = true,
+	-- 					clear_in_insert_mode = false,
+	-- 					download_remote_images = true,
+	-- 					only_render_image_at_cursor = false,
+	-- 					filetypes = { "markdown", "vimwiki" }, -- markdown extensions (ie. quarto) can go here
+	-- 				},
+	-- 				neorg = {
+	-- 					enabled = true,
+	-- 					clear_in_insert_mode = false,
+	-- 					download_remote_images = true,
+	-- 					only_render_image_at_cursor = false,
+	-- 					filetypes = { "norg" },
+	-- 				},
+	-- 			},
+	-- 			max_width = nil,
+	-- 			max_height = nil,
+	-- 			max_width_window_percentage = nil,
+	-- 			max_height_window_percentage = 50,
+	-- 			window_overlap_clear_enabled = true, -- toggles images when windows are overlapped
+	-- 			window_overlap_clear_ft_ignore = { "cmp_menu", "cmp_docs", "" },
+	-- 			editor_only_render_when_focused = false, -- auto show/hide images when the editor gains/looses focus
+	-- 			tmux_show_only_in_active_window = true, -- auto show/hide images in the correct Tmux window (needs visual-activity off)
+	-- 			hijack_file_patterns = { "*.png", "*.jpg", "*.jpeg", "*.gif", "*.webp" }, -- render image files as images when opened
+	-- 		})
+	-- 	end,
+	-- },
+
+	-- 一个 neovim 插件，可预览应用了 LSP 代码操作的代码。
+	-- {
+	-- 	"aznhe21/actions-preview.nvim",
+	-- 	config = function()
+	-- 		vim.keymap.set({ "v", "n" }, "gp", require("actions-preview").code_actions)
+	-- 	end,
+	-- 	event = "BufRead *.go",
+	-- },
+
+	-- Fidget 是编辑器角落里的一个非侵入式窗口，可以管理自己的生命周期。其目标是：
+	-- 为 Neovim 的 $/progress 处理程序提供 UI
+	-- 提供可配置的 vim.notify() 后端
+	-- 支持基本的 ASCII 动画（指尖陀螺！）以指示生命迹象
+	-- 易于配置、易于维护且易于破解
+	-- 状态行中只能存储这么多信息。此外，谁不喜欢一点终端视觉糖果作为款待呢？
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			-- options
+		},
+	},
+
+	-- 上下文感知悬停提供程序的通用框架（类似于 vim.lsp.buf.hover ）。
+	-- 需要 Nvim v0.10.0
+	{
+		"lewis6991/hover.nvim",
+		config = function()
+			require("hover").setup({
+				init = function()
+					-- Require providers
+					require("hover.providers.lsp")
+					-- require('hover.providers.gh')
+					-- require('hover.providers.gh_user')
+					-- require('hover.providers.jira')
+					-- require('hover.providers.dap')
+					-- require('hover.providers.fold_preview')
+					-- require('hover.providers.diagnostic')
+					-- require('hover.providers.man')
+					-- require('hover.providers.dictionary')
+				end,
+				preview_opts = {
+					border = "single",
+				},
+				--             -- Whether the contents of a currently open hover window should be moved
+				--             -- to a :h preview-window when pressing the hover keymap.
+				preview_window = false,
+				title = true,
+				mouse_providers = {
+					"LSP",
+				},
+				mouse_delay = 1000,
+			})
+
+			-- Setup keymaps
+			vim.keymap.set("n", "K", function()
+				local api = vim.api
+				local hover_win = vim.b.hover_preview
+				if hover_win and api.nvim_win_is_valid(hover_win) then
+					api.nvim_set_current_win(hover_win)
+				else
+					require("hover").hover()
+				end
+			end, { desc = "hover.nvim" })
+			vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
+			-- vim.keymap.set("n", "<C-p>", function()
+			-- 	require("hover").hover_switch("previous")
+			-- end, { desc = "hover.nvim (previous source)" })
+			-- vim.keymap.set("n", "<C-n>", function()
+			-- 	require("hover").hover_switch("next")
+			-- end, { desc = "hover.nvim (next source)" })
+
+			-- Mouse support
+			vim.keymap.set("n", "<MouseMove>", require("hover").hover_mouse, { desc = "hover.nvim (mouse)" })
+			vim.o.mousemoveevent = true
+		end,
+	},
+
+	-- Neovim 插件，用于显示 JB 的 IDEA 等函数的引用和定义信息。
+	{
+		"VidocqH/lsp-lens.nvim",
+		event = "VeryLazy",
+		-- target_symbol_kinds = {
+		-- enable = true,
+		-- include_declaration = true, -- Reference include declaration
+		-- sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
+		-- 	definition = true,
+		-- 	references = true,
+		-- 	implements = true,
+		-- 	git_authors = true,
+		-- },
+		-- vim.lsp.protocol.SymbolKind.Function,
+		-- vim.lsp.protocol.SymbolKind.Method,
+		-- vim.lsp.protocol.SymbolKind.Interface,
+		-- vim.lsp.protocol.SymbolKind.Class,
+		-- vim.lsp.protocol.SymbolKind.Struct, -- This is what you need
+		-- },
+		config = function()
+			require("lsp-lens").setup({
+				sections = {
+					definition = function(count)
+						return "Definitions: " .. count
+					end,
+					references = function(count)
+						return "References: " .. count
+					end,
+					implements = function(count)
+						return "Implements: " .. count
+					end,
+					git_authors = function(latest_author, count)
+						return " " .. latest_author .. (count - 1 == 0 and "" or (" + " .. count - 1))
+					end,
+				},
+			})
+		end,
+	},
+
+	-- 上下文语法补全
+	{
+		"ray-x/cmp-treesitter",
+		event = "VeryLazy",
+		config = function()
+			local r = try_require("code.completion")
+			if r ~= nil then
+				r.cmpConfig()
+			end
+
+			local m = try_require("code.lsp")
+			if m ~= nil then
+				m.lspConfig()
+			end
+
+			local n = try_require("code.format")
+			if n ~= nil then
+				n.formatConfig()
+			end
+		end,
+	},
+
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		event = "BufRead *.lua",
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
 			},
 		},
 	},

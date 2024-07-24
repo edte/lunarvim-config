@@ -6,3 +6,6 @@ require("text")
 require("ui")
 require("components")
 require("keymaps")
+
+keymap("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
+keymap("n", "gr", "<cmd>Telescope lsp_references<cr>")

@@ -49,13 +49,10 @@ keymap("n", "<c-p>", "<cmd>lua vim.diagnostic.goto_prev()<cr>") -- pre error
 keymap("n", "<c-n>", "<cmd>lua vim.diagnostic.goto_next()<cr>") -- next error
 
 -- 查看文档
-keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>")
+-- keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>")
 
 -- 重命名
 keymap("n", "R", "<cmd>lua vim.lsp.buf.rename()<CR>")
-
-keymap("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
-keymap("n", "gr", "<cmd>Telescope lsp_references<cr>")
 
 keymap("n", "<bs>", "<C-^>")
 
@@ -141,3 +138,6 @@ end, { desc = "Delete the current Buffer while maintaining the window layout" })
 keymap("n", "gh", "<CMD>ClangdSwitchSourceHeader<CR>")
 
 cmd("command! Pwd lua print(vim.fn.getcwd())")
+
+keymap("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
+keymap("n", "gr", "<cmd>Telescope lsp_references<cr>")

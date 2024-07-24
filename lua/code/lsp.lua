@@ -33,6 +33,7 @@ M.lspConfig = function()
 		gopath = ""
 	end
 	local gopathmod = gopath .. "/pkg/mod"
+
 	-- go
 	lspconfig.gopls.setup({
 		settings = {
