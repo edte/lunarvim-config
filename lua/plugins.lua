@@ -1007,25 +1007,19 @@ lvim.plugins = {
 
 	-- Neovim 插件，用于显示 JB 的 IDEA 等函数的引用和定义信息。
 	{
-		"VidocqH/lsp-lens.nvim",
-		event = "VeryLazy",
-		-- target_symbol_kinds = {
-		-- enable = true,
-		-- include_declaration = true, -- Reference include declaration
-		-- sections = { -- Enable / Disable specific request, formatter example looks 'Format Requests'
-		-- 	definition = true,
-		-- 	references = true,
-		-- 	implements = true,
-		-- 	git_authors = true,
-		-- },
-		-- vim.lsp.protocol.SymbolKind.Function,
-		-- vim.lsp.protocol.SymbolKind.Method,
-		-- vim.lsp.protocol.SymbolKind.Interface,
-		-- vim.lsp.protocol.SymbolKind.Class,
-		-- vim.lsp.protocol.SymbolKind.Struct, -- This is what you need
-		-- },
+		"edte/lsp_lens.nvim",
+		-- event = "VeryLazy",
 		config = function()
+			local SymbolKind = vim.lsp.protocol.SymbolKind
 			require("lsp-lens").setup({
+				target_symbol_kinds = {
+					SymbolKind.Function,
+					SymbolKind.Method,
+					SymbolKind.Interface,
+					SymbolKind.Class,
+					SymbolKind.Struct, -- This is what you need
+				},
+				indent_by_lsp = false,
 				sections = {
 					definition = function(count)
 						return "Definitions: " .. count
