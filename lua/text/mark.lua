@@ -39,9 +39,9 @@ M.marksConfig = function()
 			annotate = false,
 		},
 		mappings = {
-			set_next = "mm",
+			-- set_next = "mm",
 			delete_line = "md",
-			delete_buf = "mD",
+			-- delete_buf = "mD",
 			-- next = "m,",
 			-- prev = "m.",
 			-- preview = "m:",
@@ -57,6 +57,7 @@ local upp = function(i)
 	return string.char(65 + i)
 end
 
+-- 所有vim自带的mark都默认为大写
 for i = 0, 25 do
 	vim.keymap.set("n", "m" .. low(i), "m" .. upp(i))
 end
@@ -69,5 +70,13 @@ end
 for i = 0, 25 do
 	vim.keymap.set("n", "'" .. upp(i), "'" .. low(i))
 end
+
+--
+local b = try_require("bookmarks")
+if b == nil then
+	return
+end
+keymap("n", "mm", "<cmd>lua require'bookmarks'.add_bookmarks(fasle)<cr>")
+keymap("n", "mo", "<cmd>Telescope bookmarks<cr>")
 
 return M

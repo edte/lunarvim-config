@@ -17,15 +17,20 @@ M.lspConfig = function()
 	})
 	lspconfig.cssls.setup({})
 	lspconfig.tailwindcss.setup({})
-	lspconfig.jsonls.setup({})
+	lspconfig.jsonls.setup({
+		filetypes = { "json" },
+	})
 	lspconfig.tsserver.setup({})
 	lspconfig.emmet_ls.setup({})
 	lspconfig.marksman.setup({})
 	lspconfig.emmet_language_server.setup({})
 	lspconfig.html.setup({})
 	lspconfig.autotools_ls.setup({})
-	lspconfig.ruby_lsp.setup({})
+	lspconfig.ruby_lsp.setup({
+		filetypes = { "ruby" },
+	})
 
+	-- go
 	local util = require("lspconfig/util")
 	local lastRootPath = nil
 	local gopath = os.getenv("GOPATH")
@@ -34,7 +39,6 @@ M.lspConfig = function()
 	end
 	local gopathmod = gopath .. "/pkg/mod"
 
-	-- go
 	lspconfig.gopls.setup({
 		settings = {
 			gopls = {
@@ -64,6 +68,7 @@ M.lspConfig = function()
 			return lastRootPath
 		end,
 		on_attach = M.on_attach,
+		filetypes = { "go" },
 	})
 
 	-- lua
