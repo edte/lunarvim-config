@@ -49,28 +49,6 @@ M.marksConfig = function()
 	})
 end
 
--- Use lowercase for global marks and uppercase for local marks.
-local low = function(i)
-	return string.char(97 + i)
-end
-local upp = function(i)
-	return string.char(65 + i)
-end
-
--- 所有vim自带的mark都默认为大写
-for i = 0, 25 do
-	vim.keymap.set("n", "m" .. low(i), "m" .. upp(i))
-end
-for i = 0, 25 do
-	vim.keymap.set("n", "m" .. upp(i), "m" .. low(i))
-end
-for i = 0, 25 do
-	vim.keymap.set("n", "'" .. low(i), "'" .. upp(i))
-end
-for i = 0, 25 do
-	vim.keymap.set("n", "'" .. upp(i), "'" .. low(i))
-end
-
 --
 local b = try_require("bookmarks")
 if b == nil then

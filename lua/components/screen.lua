@@ -31,6 +31,3 @@ keymap("n", "<up>", "<c-w>k")
 keymap("n", "<down>", "<c-w>j")
 keymap("", "<c-h>", "<c-w>h")
 keymap("", "<c-l>", "<c-w>l")
-
--- vim.api.nvim_set_keymap('n', 'j', '<Plug>(accelerated_jk_gj)', {})
--- vim.api.nvim_set_keymap('n', 'k', '<Plug>(accelerated_jk_gk)', {})

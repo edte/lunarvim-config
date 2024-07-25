@@ -29,7 +29,7 @@ lvim.plugins = {
 	-- -- 查看 Vim 标记并与之交互的用户体验更好。
 	{
 		"chentoast/marks.nvim",
-		event = "VeryLazy",
+		-- keys = { "m" },
 		config = function()
 			local r = try_require("text.mark")
 			if r ~= nil then
@@ -42,7 +42,7 @@ lvim.plugins = {
 	-- 保存目录 /Users/edte/.cache/lvim/arrow
 	{
 		"otavioschwanck/arrow.nvim",
-		event = "VeryLazy",
+		keys = { "`" },
 		opts = {
 			show_icons = true,
 			leader_key = "`", -- Recommended to be a single key
@@ -58,6 +58,7 @@ lvim.plugins = {
 	-- ~/.local/share/nvim/bookmarks/
 	{
 		"crusj/bookmarks.nvim",
+		-- keys = { "m" },
 		branch = "main",
 		dependencies = { "nvim-web-devicons" },
 		config = function()
@@ -96,7 +97,7 @@ lvim.plugins = {
 	-- 使用“.”启用重复支持的插件映射
 	{
 		"tpope/vim-repeat",
-		event = "VeryLazy",
+		keys = { "." },
 	},
 
 	-- 增强 Neovim 中宏的使用。
@@ -169,7 +170,7 @@ lvim.plugins = {
 	{
 		"mg979/vim-visual-multi",
 		branch = "master",
-		event = "VeryLazy",
+		keys = { "<c-d>" },
 		init = function()
 			vim.g.VM_maps = {
 				["Find Under"] = "<C-d>",
@@ -180,7 +181,7 @@ lvim.plugins = {
 	-- 不是天空中的 UFO，而是 Neovim 中的超级折叠。 za
 	{
 		"kevinhwang91/nvim-ufo",
-		event = "VeryLazy",
+		keys = { "za", "z" },
 		dependencies = "kevinhwang91/promise-async",
 		config = function()
 			local r = try_require("text.fold")
@@ -239,7 +240,7 @@ lvim.plugins = {
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
 		opts = {},
-		event = "VeryLazy",
+		-- cmd = { "Todo", "TodoQuickFix", "TodoTelescope", "TodoTrouble", "TodoLocList" },
 		config = function()
 			try_require("todo-comments").setup({})
 
@@ -263,20 +264,34 @@ lvim.plugins = {
 		end,
 	},
 
-	-- 长按j k 加速
-	-- 卡顿
+	-- -- 长按j k 加速
+	-- -- 卡顿
 	{
 		"rainbowhxch/accelerated-jk.nvim",
-		event = "VeryLazy",
 		config = function()
-			vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj)", {})
-			vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk)", {})
+			vim.api.nvim_set_keymap("n", "j", "<Cmd>lua require'accelerated-jk'.move_to('j')<cr>", {})
+			vim.api.nvim_set_keymap("n", "k", "<Cmd>lua require'accelerated-jk'.move_to('k')<cr>", {})
+			vim.api.nvim_set_keymap("n", "h", "<Cmd>lua require'accelerated-jk'.move_to('h')<cr>", {})
+			vim.api.nvim_set_keymap("n", "l", "<Cmd>lua require'accelerated-jk'.move_to('l')<cr>", {})
+			vim.api.nvim_set_keymap("n", "e", "<Cmd>lua require'accelerated-jk'.move_to('e')<cr>", {})
+			vim.api.nvim_set_keymap("n", "b", "<Cmd>lua require'accelerated-jk'.move_to('b')<cr>", {})
 		end,
 	},
 
+	-- {
+	-- 	"rhysd/accelerated-jk",
+	-- 	config = function()
+	-- 		-- vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj)", {})
+	-- 		-- vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk)", {})
+	-- 		vim.api.nvim_set_keymap("n", "j", "<Plug>(accelerated_jk_gj_position)", {})
+	-- 		vim.api.nvim_set_keymap("n", "k", "<Plug>(accelerated_jk_gk_position)", {})
+	-- 	end,
+	-- },
+
 	{
 		"edte/normal-colon.nvim",
-		event = "VeryLazy",
+		keys = { ";" },
+		-- event = "VeryLazy",
 		-- opts = {},
 		config = function()
 			require("normal-colon").setup()
@@ -301,7 +316,7 @@ lvim.plugins = {
 	{
 		"kylechui/nvim-surround",
 		version = "*", -- Use for stability; omit to use `main` branch for the latest features
-		event = "VeryLazy",
+		keys = { "ys", "ds", "cs" },
 		config = function()
 			try_require("nvim-surround").setup({
 				-- Configuration here, or leave empty to use defaults
@@ -345,7 +360,8 @@ lvim.plugins = {
 		"tzachar/cmp-tabnine",
 		build = "./install.sh",
 		dependencies = "hrsh7th/nvim-cmp",
-		event = "BufRead",
+		-- event = "BufRead",
+		ft = { "lua", "go", "cpp" },
 	},
 
 	-- 单词补全
@@ -464,7 +480,7 @@ lvim.plugins = {
 	-- Clanalphagd 针对 neovim 的 LSP 客户端的不合规范的功能。使用 https://sr.ht/~p00f/clangd_extensions.nvim 代替
 	{
 		"p00f/clangd_extensions.nvim",
-		event = "BufRead *.cpp",
+		ft = { "cpp", "h" },
 	},
 
 	-- wilder.nvim 插件，用于命令行补全，和 noice.nvim 冲突
@@ -490,7 +506,7 @@ lvim.plugins = {
 
 	{
 		"edte/copilot",
-		event = "VeryLazy",
+		ft = { "lua", "go", "cpp" },
 	},
 
 	-- {
@@ -538,7 +554,6 @@ lvim.plugins = {
 	-- jce 高亮
 	{
 		"edte/jce-highlight",
-		event = "BufRead *.jce",
 		ft = { "jce" },
 	},
 
@@ -574,7 +589,6 @@ lvim.plugins = {
 			end
 		end,
 
-		event = "BufRead *.go",
 		ft = { "go", "gomod" },
 		build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
 	},
@@ -583,7 +597,7 @@ lvim.plugins = {
 	{
 		"fabridamicelli/cronex.nvim",
 		opts = {},
-		event = "BufRead *.go",
+		ft = { "go" },
 		config = function()
 			local r = try_require("text.cron")
 			if r ~= nil then
@@ -595,7 +609,7 @@ lvim.plugins = {
 	-- 翻译插件
 	{
 		"voldikss/vim-translator",
-		event = "VeryLazy",
+		cmd = { "Translate", "TranslateH", "TranslateW", "TranslateL", "TranslateR", "TranslateW", "TranslateW" },
 	},
 
 	-- -- 临时文件
@@ -647,7 +661,7 @@ lvim.plugins = {
 	-- 单选项卡界面可轻松循环浏览任何 git rev 的所有修改文件的差异。
 	{
 		"sindrets/diffview.nvim",
-		event = "VeryLazy",
+		cmd = { "DiffviewOpen" },
 		config = function()
 			local r = try_require("code.git")
 			if r ~= nil then
@@ -673,14 +687,23 @@ lvim.plugins = {
 	-- [ x — 移至下一个冲突
 	{
 		"akinsho/git-conflict.nvim",
+		cmd = {
+			"GitConflictChooseOurs",
+			"GitConflictChooseTheirs",
+			"GitConflictChooseBoth",
+			"GitConflictChooseNone",
+			"GitConflictNextConflict",
+			"GitConflictPrevConflict",
+			"GitConflictListQf",
+		},
 		version = "*",
 		config = true,
-		event = "VeryLazy",
 	},
+
 	-- normal mode提供Git/G 命令
 	{
 		"tpope/vim-fugitive",
-		event = "VeryLazy",
+		cmd = { "Git", "G" },
 	},
 
 	-----------------------------------------treesitter -----------------------------------------------------------------------------------------------
@@ -688,6 +711,7 @@ lvim.plugins = {
 	-- barbucue 的补充，显示更多
 	{
 		"nvim-treesitter/nvim-treesitter-context",
+		event = "BufRead",
 		dependencies = {
 			"nvim-telescope/telescope-project.nvim",
 			"nvim-treesitter/nvim-treesitter-refactor",
@@ -708,9 +732,10 @@ lvim.plugins = {
 		end,
 	},
 
+	-- what is this
 	{
 		"theHamsta/nvim-treesitter-pairs",
-		event = "VeryLazy",
+		event = "BufRead",
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				pairs = {
@@ -739,7 +764,7 @@ lvim.plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		after = "nvim-treesitter",
-		event = "VeryLazy",
+		event = "BufRead",
 		dependencies = "nvim-treesitter/nvim-treesitter",
 		config = function()
 			local r = try_require("text.jump")
@@ -767,7 +792,7 @@ lvim.plugins = {
 	-- -- 使用treesitter自动关闭并自动重命名html标签
 	{
 		"windwp/nvim-ts-autotag",
-		event = "VeryLazy",
+		ft = { "html", "vue" },
 		config = function()
 			try_require("nvim-ts-autotag").setup()
 		end,
@@ -828,7 +853,7 @@ lvim.plugins = {
 	-- Neovim 插件添加了对使用内置 LSP 的文件操作的支持
 	{
 		"antosha417/nvim-lsp-file-operations",
-		event = "BufRead *.vue",
+		ft = { "vue" },
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-tree.lua",
@@ -873,7 +898,6 @@ lvim.plugins = {
 
 	{
 		"MeanderingProgrammer/markdown.nvim",
-		event = "BufRead *.md",
 		main = "render-markdown",
 		ft = { "md" },
 		opts = {
@@ -943,12 +967,12 @@ lvim.plugins = {
 	-- 支持基本的 ASCII 动画（指尖陀螺！）以指示生命迹象
 	-- 易于配置、易于维护且易于破解
 	-- 状态行中只能存储这么多信息。此外，谁不喜欢一点终端视觉糖果作为款待呢？
-	{
-		"j-hui/fidget.nvim",
-		opts = {
-			-- options
-		},
-	},
+	-- {
+	-- 	"j-hui/fidget.nvim",
+	-- 	opts = {
+	-- 		-- options
+	-- 	},
+	-- },
 
 	-- 上下文感知悬停提供程序的通用框架（类似于 vim.lsp.buf.hover ）。
 	-- 需要 Nvim v0.10.0
@@ -988,7 +1012,7 @@ lvim.plugins = {
 				if hover_win and api.nvim_win_is_valid(hover_win) then
 					api.nvim_set_current_win(hover_win)
 				else
-					require("hover").hover()
+					try_require("hover").hover()
 				end
 			end, { desc = "hover.nvim" })
 			vim.keymap.set("n", "gK", require("hover").hover_select, { desc = "hover.nvim (select)" })
@@ -1008,7 +1032,7 @@ lvim.plugins = {
 	-- Neovim 插件，用于显示 JB 的 IDEA 等函数的引用和定义信息。
 	{
 		"edte/lsp_lens.nvim",
-		-- event = "VeryLazy",
+		ft = { "lua", "go", "cpp" },
 		config = function()
 			local SymbolKind = vim.lsp.protocol.SymbolKind
 			require("lsp-lens").setup({
@@ -1041,7 +1065,6 @@ lvim.plugins = {
 	{
 		"folke/lazydev.nvim",
 		ft = "lua", -- only load on lua files
-		event = "BufRead *.lua",
 		opts = {
 			library = {
 				-- See the configuration section for more details
@@ -1054,6 +1077,7 @@ lvim.plugins = {
 	-- 上下文语法补全
 	{
 		"ray-x/cmp-treesitter",
+		ft = { "lua", "go", "cpp" },
 		config = function()
 			local r = try_require("code.completion")
 			if r ~= nil then
@@ -1069,6 +1093,17 @@ lvim.plugins = {
 			if n ~= nil then
 				n.formatConfig()
 			end
+		end,
+	},
+
+	-- 项目维度的替换插件
+	-- normal 下按 \+r 生效
+	{
+		"MagicDuck/grug-far.nvim",
+		cmd = "Replace",
+		config = function()
+			require("grug-far").setup({})
+			cmd("command! -nargs=* Replace GrugFar")
 		end,
 	},
 }
