@@ -21,10 +21,6 @@ term.setup({
 
 ------------------------------------keymap------------------------------------------------------------------
 -- 终端
--- lvim.builtin.which_key.mappings["T"] = {
--- 	'<cmd>execute  v:count . "ToggleTerm"<CR>',
--- 	"term",
--- }
 
 -- keymap("n", "t", '<cmd>execute  v:count . "ToggleTerm"<CR>')
 

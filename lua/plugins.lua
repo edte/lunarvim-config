@@ -71,21 +71,6 @@ lvim.plugins = {
 				},
 			})
 			require("telescope").load_extension("bookmarks")
-
-			-- lvim.builtin.which_key.mappings["mm"] = {
-			-- 	"<cmd>lua require'bookmarks'.add_bookmarks(fasle)<cr>",
-			-- 	"mark",
-			-- }
-
-			-- lvim.builtin.which_key.mappings["md"] = {
-			-- 	"<cmd>lua require'bookmarks.list'.delete_on_virt()<cr>",
-			-- 	"delete",
-			-- }
-
-			-- lvim.builtin.which_key.mappings["mo"] = {
-			-- 	"<cmd>lua require'bookmarks'.toggle_bookmarks()<cr>",
-			-- 	"Goto",
-			-- }
 		end,
 	},
 

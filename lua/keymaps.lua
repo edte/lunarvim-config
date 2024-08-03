@@ -9,16 +9,6 @@ lvim.keys.visual_block_mode["<A-k>"] = false
 lvim.keys.visual_block_mode["J"] = false
 lvim.keys.visual_block_mode["K"] = false
 
-lvim.builtin.which_key.mappings["w"] = {}
-lvim.builtin.which_key.mappings["T"] = {}
-lvim.builtin.which_key.mappings["D"] = {}
-lvim.builtin.which_key.mappings["h"] = {}
-lvim.builtin.which_key.mappings["m"] = {}
-lvim.builtin.which_key.mappings["b"] = {}
-
--- leader 键
-lvim.leader = "space"
-
 vim.keymap.del("", "grr", {})
 vim.keymap.del("", "gra", {})
 vim.keymap.del("", "grn", {})
@@ -65,50 +55,9 @@ keymap("n", "R", "<cmd>lua vim.lsp.buf.rename()<CR>")
 
 keymap("n", "<bs>", "<C-^>")
 
-lvim.builtin.which_key.mappings["t"] = {
-	-- "<cmd>Telescope live_grep<cr>",
-	"<cmd>FzfLua live_grep_native<cr>",
-	"text",
-}
-
-local utils = require("telescope.utils")
-_G.project_files = function()
-	local _, ret, _ = utils.get_os_command_output({ "git", "rev-parse", "--is-inside-work-tree" })
-	if ret == 0 then
-		require("fzf-lua").git_files()
-	else
-		require("fzf-lua").files()
-	end
-end
-
-lvim.builtin.which_key.mappings["f"] = {
-	"<cmd>lua project_files()<cr>",
-	"recent files",
-}
-
-lvim.builtin.which_key.mappings["r"] = {
-	"<cmd>Telescope oldfiles<cr>",
-	"recent files",
-}
-
 keymap("", "gd", "<cmd>Telescope lsp_definitions<cr>")
 keymap("", "gD", "<cmd>FzfLua lsp_declarations<cr>")
 keymap("", "gr", "<cmd>FzfLua lsp_references<cr>")
-
-lvim.builtin.which_key.mappings["sk"] = {
-	"<cmd>FzfLua keymaps<cr>",
-	"keymaps",
-}
-
-lvim.builtin.which_key.mappings["sa"] = {
-	"<cmd>FzfLua autocmds<cr>",
-	"autocmds",
-}
-
-lvim.builtin.which_key.mappings["gs"] = {
-	"<cmd>FzfLua git_status<cr>",
-	"git status",
-}
 
 -- gd 跳转定义
 -- gf 跳转函数头
@@ -192,3 +141,144 @@ end
 for i = 0, 25 do
 	vim.keymap.set("n", "'" .. upp(i), "'" .. low(i))
 end
+
+----------------------------------------------------------------which key ------------------------------------------------------------------------
+-- leader 键
+
+local utils = require("telescope.utils")
+_G.project_files = function()
+	local _, ret, _ = utils.get_os_command_output({ "git", "rev-parse", "--is-inside-work-tree" })
+	if ret == 0 then
+		require("fzf-lua").git_files()
+	else
+		require("fzf-lua").files()
+	end
+end
+
+lvim.leader = "space"
+
+lvim.builtin.which_key.mappings = {
+	["/"] = { "<Plug>(comment_toggle_linewise_current)", "comment" },
+	["q"] = { "<cmd>confirm q<CR>", "quit" },
+	["c"] = { "<cmd>bd<CR>", "close Buffer" },
+	["C"] = { "<cmd>BufferCloseAllButCurrent<CR>", "Close Other Buffer" },
+	["e"] = { "<cmd>lua ToggleMiniFiles()<CR>", "Explorer" },
+	["t"] = { "<cmd>FzfLua live_grep_native<CR>", "text" },
+	["f"] = { "<cmd>lua project_files()<CR>", "files" },
+	["r"] = { "<cmd>Telescope oldfiles<CR>", "recents" },
+
+	p = {
+		name = "plugins",
+		i = { "<cmd>Lazy install<cr>", "Install" },
+		s = { "<cmd>Lazy sync<cr>", "Sync" },
+		S = { "<cmd>Lazy clear<cr>", "Status" },
+		c = { "<cmd>Lazy clean<cr>", "Clean" },
+		u = { "<cmd>Lazy update<cr>", "Update" },
+		p = { "<cmd>Lazy profile<cr>", "Profile" },
+		l = { "<cmd>Lazy log<cr>", "Log" },
+		d = { "<cmd>Lazy debug<cr>", "Debug" },
+	},
+
+	g = {
+		name = "git",
+		l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "blame" },
+		s = { "<cmd>FzfLua git_status<cr>", "status" },
+		b = { "<cmd>FzfLua git_branches<cr>", "branch" },
+		c = { "<cmd>FzfLua git_commits<cr>", "commit" },
+		d = {
+			"<cmd>Gitsigns diffthis HEAD<cr>",
+			"diff",
+		},
+	},
+
+	l = {
+		name = "lsp",
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		d = { "<cmd>Telescope diagnostics bufnr=0 theme=get_ivy<cr>", "Buffer Diagnostics" },
+		w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+		f = { "<cmd>lua require('lvim.lsp.utils').format()<cr>", "Format" },
+		i = { "<cmd>LspInfo<cr>", "Info" },
+		I = { "<cmd>Mason<cr>", "Mason Info" },
+		j = {
+			"<cmd>lua vim.diagnostic.goto_next()<cr>",
+			"Next Diagnostic",
+		},
+		k = {
+			"<cmd>lua vim.diagnostic.goto_prev()<cr>",
+			"Prev Diagnostic",
+		},
+		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
+		q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
+		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+		S = {
+			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+			"Workspace Symbols",
+		},
+		e = { "<cmd>Telescope quickfix<cr>", "Telescope Quickfix" },
+	},
+
+	L = {
+		name = "LunarVim",
+		c = {
+			"<cmd>edit " .. get_config_dir() .. "/config.lua<cr>",
+			"Edit config.lua",
+		},
+		d = { "<cmd>LvimDocs<cr>", "View LunarVim's docs" },
+		f = {
+			"<cmd>lua require('lvim.core.telescope.custom-finders').find_lunarvim_files()<cr>",
+			"Find LunarVim files",
+		},
+		g = {
+			"<cmd>lua require('lvim.core.telescope.custom-finders').grep_lunarvim_files()<cr>",
+			"Grep LunarVim files",
+		},
+		k = { "<cmd>Telescope keymaps<cr>", "View LunarVim's keymappings" },
+		i = {
+			"<cmd>lua require('lvim.core.info').toggle_popup(vim.bo.filetype)<cr>",
+			"Toggle LunarVim Info",
+		},
+		I = {
+			"<cmd>lua require('lvim.core.telescope.custom-finders').view_lunarvim_changelog()<cr>",
+			"View LunarVim's changelog",
+		},
+		l = {
+			name = "+logs",
+			d = {
+				"<cmd>lua require('lvim.core.terminal').toggle_log_view(require('lvim.core.log').get_path())<cr>",
+				"view default log",
+			},
+			D = {
+				"<cmd>lua vim.fn.execute('edit ' .. require('lvim.core.log').get_path())<cr>",
+				"Open the default logfile",
+			},
+			l = {
+				"<cmd>lua require('lvim.core.terminal').toggle_log_view(vim.lsp.get_log_path())<cr>",
+				"view lsp log",
+			},
+			L = { "<cmd>lua vim.fn.execute('edit ' .. vim.lsp.get_log_path())<cr>", "Open the LSP logfile" },
+			n = {
+				"<cmd>lua require('lvim.core.terminal').toggle_log_view(os.getenv('NVIM_LOG_FILE'))<cr>",
+				"view neovim log",
+			},
+			N = { "<cmd>edit $NVIM_LOG_FILE<cr>", "Open the Neovim logfile" },
+		},
+		r = { "<cmd>LvimReload<cr>", "Reload LunarVim's configuration" },
+		u = { "<cmd>LvimUpdate<cr>", "Update LunarVim" },
+	},
+
+	s = {
+		name = "search",
+		a = { "<cmd>FzfLua autocmds<cr>", "autocmds" },
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		h = { "<cmd>Telescope help_tags<cr>", "Find Help" },
+		H = { "<cmd>Telescope highlights<cr>", "Find highlight groups" },
+		M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+		R = { "<cmd>Telescope registers<cr>", "Registers" },
+		t = { "<cmd>Telescope live_grep<cr>", "Text" },
+		k = { "<cmd>FzfLua keymaps<cr>", "Keymaps" },
+		c = { "<cmd>Telescope commands<cr>", "Commands" },
+		C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+	},
+}

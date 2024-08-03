@@ -8,16 +8,6 @@ end
 
 -- 删除buffer
 
-lvim.builtin.which_key.mappings["C"] = {
-	":BufferCloseAllButCurrent<cr>",
-	"close other buffers",
-}
-
--- lvim.builtin.which_key.mappings["c"] = {
--- 	":BufferKill<cr>",
--- 	"close other buffers",
--- }
-
 keymap("n", "<<", ":BufferMovePrevious<cr>")
 keymap("n", ">>", ":BufferMoveNext<cr>")
 

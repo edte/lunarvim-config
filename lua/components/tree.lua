@@ -12,11 +12,6 @@ lvim.builtin.nvimtree.active = false
 lvim.builtin.nvimtree.setup.view.side = "left"
 lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
 
-lvim.builtin.which_key.mappings["e"] = {
-	"<cmd>lua ToggleMiniFiles()<cr>",
-	"Explorer",
-}
-
 function ToggleMiniFiles()
 	local mf = require("mini.files")
 	if not mf.close() then

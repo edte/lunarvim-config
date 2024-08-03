@@ -29,7 +29,7 @@
   "fuzzy.nvim": { "branch": "master", "commit": "68608f6a232f7e73ccf81437bf12108128f15bd4" },
   "fzf-lua": { "branch": "main", "commit": "580a20c58a714de566305756ad15384304ab9aae" },
   "git-conflict.nvim": { "branch": "main", "commit": "bfd9fe6fba9a161fc199771d85996236a0d0faad" },
-  "gitsigns.nvim": { "branch": "main", "commit": "0ed466953fe5885166e0d60799172a8b1f752d16" },
+  "gitsigns.nvim": { "branch": "main", "commit": "805610a9393fa231f2c2b49cb521bfa413fadb3d" },
   "go.nvim": { "branch": "master", "commit": "e66c3240d26936428cd0f320dc5ffa1eb01538b8" },
   "goplements.nvim": { "branch": "main", "commit": "a3291c4db092d5bc95ec0e6e2bcfc14587d06dfc" },
   "grug-far.nvim": { "branch": "main", "commit": "af2c8bba4faac4b47165005639573e4493e9d79e" },
