@@ -71,12 +71,6 @@ cmd("nnoremap : ;")
 cmd("inoremap ; :")
 cmd("inoremap : ;")
 
-cmd("xnoremap ; :")
-cmd("xnoremap : ;")
-
-cmd("vnoremap ; :")
-cmd("vnoremap : ;")
-
 cmd("nnoremap <Enter> o<ESC>") -- Insert New Line quickly
 -- cmd("nnoremap <Enter> %")
 
@@ -157,11 +151,25 @@ end
 
 lvim.leader = "space"
 
+lvim.builtin.which_key.vmappings = {
+	["/"] = { "<Plug>(comment_toggle_linewise_visual)", "Comment toggle linewise (visual)" },
+	l = {
+		name = "LSP",
+		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+	},
+	g = {
+		name = "Git",
+		r = { "<cmd>Gitsigns reset_hunk<cr>", "Reset Hunk" },
+		s = { "<cmd>Gitsigns stage_hunk<cr>", "Stage Hunk" },
+	},
+	t = { ":'<,'>Translate ZH<cr>", "Translate" },
+}
+
 lvim.builtin.which_key.mappings = {
 	["/"] = { "<Plug>(comment_toggle_linewise_current)", "comment" },
 	["q"] = { "<cmd>confirm q<CR>", "quit" },
 	["c"] = { "<cmd>bd<CR>", "close Buffer" },
-	["C"] = { "<cmd>BufferCloseAllButCurrent<CR>", "Close Other Buffer" },
+	["C"] = { "<cmd>BufferLineCloseOthers<CR>", "Close Other Buffer" },
 	["e"] = { "<cmd>lua ToggleMiniFiles()<CR>", "Explorer" },
 	["t"] = { "<cmd>FzfLua live_grep_native<CR>", "text" },
 	["f"] = { "<cmd>lua project_files()<CR>", "files" },

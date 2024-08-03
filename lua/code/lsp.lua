@@ -89,7 +89,7 @@ M.lspConfig = function()
 
 	-- bash
 	lspconfig.bashls.setup({
-		filetypes = { "sh", "zsh" },
+		filetypes = { "sh", "zsh", "tmux" },
 		-- root_dir = nvim_lsp.util.root_pattern('.git'),
 		-- root_dir = ".",
 	})

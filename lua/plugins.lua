@@ -579,8 +579,8 @@ lvim.plugins = {
 
 	-- 翻译插件
 	{
-		"voldikss/vim-translator",
-		cmd = { "Translate", "TranslateH", "TranslateW", "TranslateL", "TranslateR", "TranslateW", "TranslateW" },
+		cmd = { "Translate" },
+		"uga-rosa/translate.nvim",
 	},
 
 	-- -- 临时文件

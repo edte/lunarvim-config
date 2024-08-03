@@ -2,6 +2,10 @@
 -- 设置 vim 的剪切板与系统公用
 vim.opt.clipboard = "unnamedplus"
 
+vim.g.have_nerd_font = true
+
+vim.opt.mouse = "a"
+
 --=================================================luvar_vim general settings==============================================================
 -- 日志等级
 lvim.log.level = "error"
@@ -10,8 +14,11 @@ lvim.log.level = "error"
 -- vim.lsp.set_log_level("trace")
 
 -- 不可见字符的显示，这里只把空格显示为一个点
-vim.o.list = false
-vim.o.listchars = "space:·"
+-- vim.o.list = false
+-- vim.o.listchars = "space:·"
+
+-- vim.opt.list = true
+-- vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
 vim.o.hidden = true
 
@@ -24,7 +31,6 @@ vim.opt.shiftwidth = 4
 
 -- kitty 终端区分 c-i 和 tab
 if vim.env.TERM == "xterm-kitty" then
-	print("test")
 	vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])
 	vim.cmd([[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]])
 
