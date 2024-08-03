@@ -21,5 +21,5 @@ keymap("n", ">>", ":BufferLineMoveNext<cr>")
 -- keymap("n", "c", ":BufferKill<CR>")
 
 -- -- 移动左右 buffer
-keymap("n", "<S-l>", ":BufferLineCycleNext<CR>")
-keymap("n", "<S-h>", ":BufferLineCyclePrev<CR>")
+keymap("n", "gn", ":BufferLineCycleNext<CR>")
+keymap("n", "gp", ":BufferLineCyclePrev<CR>")

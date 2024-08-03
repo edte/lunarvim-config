@@ -35,7 +35,8 @@ function M.highlightConfig()
 		return ft_to_lang(ft)
 	end
 
-	require("nvim-treesitter.parsers").filetype_to_parsername.zsh = "bash"
+	-- require("nvim-treesitter.parsers").filetype_to_parsername.zsh = "bash"
+
 	vim.treesitter.language.register("bash", "zsh")
 end
 

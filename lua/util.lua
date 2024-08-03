@@ -11,6 +11,26 @@ function try_require(package_name)
 	end
 end
 
+function Setup(package_name, options)
+	-- 尝试加载包，捕获加载过程中的错误
+	local success, package = pcall(require, package_name)
+
+	if not success then
+		-- 如果加载失败，打印错误信息
+		print("Error loading package " .. package_name .. ": " .. package)
+		return
+	end
+
+	-- 检查包是否具有 'setup' 函数
+	if type(package.setup) ~= "function" then
+		print("Error: package " .. package_name .. " does not have a 'setup' function")
+		return
+	end
+
+	-- 调用包的 'setup' 函数进行设置
+	package.setup(options)
+end
+
 local opt = {
 	noremap = true,
 	silent = true,

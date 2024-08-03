@@ -32,10 +32,10 @@ function M.formatConfig()
 		}),
 
 		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.diagnostics.eslint,
+		-- require("none-ls.diagnostics.eslint"),
 		null_ls.builtins.completion.spell,
 		null_ls.builtins.diagnostics.zsh,
-		null_ls.builtins.formatting.beautysh,
+		-- null_ls.builtins.formatting.beautysh,
 
 		-- null_ls.builtins.formatting.gofumpt,
 	}

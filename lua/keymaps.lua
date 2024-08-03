@@ -31,6 +31,11 @@ keymap("n", "c", '"_c')
 -- map("i", "jj", "<esc>", opt)
 keymap("i", "jk", "<esc>")
 
+vim.keymap.set("n", "<esc>", function()
+	cmd(":nohlsearch")
+	cmd(":call clever_f#reset()")
+end, { desc = "esc", noremap = true, buffer = true })
+
 -- 大小写转换
 -- map("n", "<esc>", "~", opt)
 
@@ -85,17 +90,17 @@ lvim.builtin.which_key.mappings["h"] = {
 
 -- 交换 : ;
 
--- cmd("nnoremap ; :")
--- cmd("nnoremap : ;")
+cmd("nnoremap ; :")
+cmd("nnoremap : ;")
 
 cmd("inoremap ; :")
 cmd("inoremap : ;")
 
--- cmd("xnoremap ; :")
--- cmd("xnoremap : ;")
+cmd("xnoremap ; :")
+cmd("xnoremap : ;")
 
--- cmd("vnoremap ; :")
--- cmd("vnoremap : ;")
+cmd("vnoremap ; :")
+cmd("vnoremap : ;")
 
 cmd("nnoremap <Enter> o<ESC>") -- Insert New Line quickly
 -- cmd("nnoremap <Enter> %")
@@ -137,10 +142,8 @@ end, { desc = "Delete the current Buffer while maintaining the window layout" })
 
 keymap("n", "gh", "<CMD>ClangdSwitchSourceHeader<CR>")
 
-cmd("command! Pwd lua print(vim.fn.getcwd())")
-
-keymap("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
-keymap("n", "gr", "<cmd>Telescope lsp_references<cr>")
+cmd("command! Pwd !ls %:p")
+-- cmd("command! Pwd lua print(vim.fn.getcwd())")
 
 -- Use lowercase for global marks and uppercase for local marks.
 local low = function(i)

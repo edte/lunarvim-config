@@ -94,7 +94,7 @@ function M.create_command_rime_sync()
 end
 
 function M.create_command_toggle_rime(client)
-	print("begin init rime")
+	-- print("begin init rime")
 	vim.api.nvim_create_user_command("ToggleRime", function(opt)
 		print("create_command_toggle_rime")
 		local bufnr = vim.api.nvim_get_current_buf()

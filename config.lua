@@ -7,5 +7,6 @@ require("ui")
 require("components")
 require("keymaps")
 
-keymap("n", "gd", "<cmd>Telescope lsp_definitions<cr>")
-keymap("n", "gr", "<cmd>Telescope lsp_references<cr>")
+keymap("", "gd", "<cmd>Telescope lsp_definitions<cr>")
+keymap("", "gr", "<cmd>Telescope lsp_references<cr>")
+keymap("", "gm", '<cmd>lua require("eyeliner.on-key").on_key("t")<cr>')

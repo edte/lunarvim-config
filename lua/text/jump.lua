@@ -42,7 +42,7 @@ M.textConfig = function()
 				enable = true,
 				-- Assign keymaps to false to disable them, e.g. `smart_rename = false`.
 				keymaps = {
-					smart_rename = "gm",
+					-- smart_rename = "gm",
 					-- smart_rename = false,
 				},
 			},
