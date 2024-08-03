@@ -64,7 +64,6 @@
   "nvim-dap-ui": { "branch": "master", "commit": "34160a7ce6072ef332f350ae1d4a6a501daf0159" },
   "nvim-lsp-file-operations": { "branch": "master", "commit": "92a673de7ecaa157dd230d0128def10beb56d103" },
   "nvim-lspconfig": { "branch": "master", "commit": "eadcee1573ca9d0e0cd36a49f620186a8dfdc607" },
-  "nvim-lua-gf": { "branch": "main", "commit": "ca712497b2bab6351518917be219e9bfd8d63e4f" },
   "nvim-navic": { "branch": "master", "commit": "8649f694d3e76ee10c19255dece6411c29206a54" },
   "nvim-recorder": { "branch": "main", "commit": "2b307756704a0ba26e8a3adfe98d02eeaecaa52e" },
   "nvim-spider": { "branch": "main", "commit": "508b3504a350fb9a93bd0b7c0d41b8b5fc732b5e" },
