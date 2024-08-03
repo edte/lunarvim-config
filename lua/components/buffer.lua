@@ -1,3 +1,5 @@
+lvim.builtin.bufferline.active = false
+
 vim.opt.termguicolors = true
 local buffer = try_require("bufferline")
 if buffer == nil then
@@ -7,19 +9,20 @@ end
 -- 删除buffer
 
 lvim.builtin.which_key.mappings["C"] = {
-	":BufferLineCloseOthers<cr>",
+	":BufferCloseAllButCurrent<cr>",
 	"close other buffers",
 }
 
--- keymap("n", "c", "<cmd>bd<CR>")
--- keymap("n", "ch", ":BufferLineCloseLeft<cr>")
--- keymap("n", "cl", ":BufferLineCloseRight<cr>")
--- keymap("n", "co", ":BufferLineCloseOthers<cr>")
-keymap("n", "<<", ":BufferLineMovePrev<cr>")
-keymap("n", ">>", ":BufferLineMoveNext<cr>")
+-- lvim.builtin.which_key.mappings["c"] = {
+-- 	":BufferKill<cr>",
+-- 	"close other buffers",
+-- }
 
--- keymap("n", "c", ":BufferKill<CR>")
+keymap("n", "<<", ":BufferMovePrevious<cr>")
+keymap("n", ">>", ":BufferMoveNext<cr>")
+
+-- keymap("n", "c", ":bd<CR>")
 
 -- -- 移动左右 buffer
-keymap("n", "gn", ":BufferLineCycleNext<CR>")
-keymap("n", "gp", ":BufferLineCyclePrev<CR>")
+keymap("n", "gn", ":BufferNext<CR>")
+keymap("n", "gp", ":BufferPrevious<CR>")

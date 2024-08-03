@@ -44,12 +44,13 @@ local buttons = {
 		dashboard.button(
 			"f",
 			"Find File ",
-			'<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), file_ignore_patterns = { "node_modules", ".git", "dist" } })<CR>'
+			"<cmd>lua project_files()<cr>"
+			-- '<cmd>lua require("telescope.builtin").find_files({ cwd = require("telescope.utils").buffer_dir(), file_ignore_patterns = { "node_modules", ".git", "dist" } })<CR>'
 		),
 		dashboard.button("n", "New File ", "<cmd>ene!<CR>"),
 		dashboard.button("p", "Recent Projects ", "<cmd>Telescope projects<CR>"),
 		dashboard.button("e", "Recently Used Files", "<cmd>Telescope oldfiles<CR>"),
-		dashboard.button("t", "Find Word", "<cmd>Telescope live_grep<CR>"),
+		dashboard.button("t", "Find Word", "<cmd>FzfLua live_grep_native<CR>"),
 		dashboard.button("c", "Configuration", "<cmd>edit " .. user_config_path .. "<CR>"),
 		dashboard.button("q", "Quit", "<CMD>quit<CR>" .. user_config_path .. "<CR>"),
 	},

@@ -51,14 +51,6 @@ M.searchConfig = function()
 			},
 		},
 	})
-
-	-- 查找文件
-	-- keymap('n', 'f', '<Space>sf')
-	-- keymap("n", "f", "<cmd>Telescope git_files<cr>")
-
-	-- 查找代码
-	-- keymap("n", "t", "<Space>st")
-	-- keymap("n", "t", "<cmd>Telescope live_grep<cr>")
 end
 
 return M

@@ -6,7 +6,3 @@ require("text")
 require("ui")
 require("components")
 require("keymaps")
-
-keymap("", "gd", "<cmd>Telescope lsp_definitions<cr>")
-keymap("", "gr", "<cmd>Telescope lsp_references<cr>")
-keymap("", "gm", '<cmd>lua require("eyeliner.on-key").on_key("t")<cr>')

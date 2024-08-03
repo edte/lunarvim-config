@@ -27,11 +27,11 @@ M.implConfig = function()
 
 	tele.load_extension("goimpl")
 
-	-- 实现go接口
-	keymap("n", "<leader>mm", [[<cmd>lua try_require'telescope'.extensions.goimpl.goimpl{}<CR>]])
+	-- -- 实现go接口
+	-- keymap("n", "<leader>mm", [[<cmd>lua try_require'telescope'.extensions.goimpl.goimpl{}<CR>]])
 
-	-- 实现go接口
-	keymap("n", "gI", "<cmd>lua try_require'telescope'.extensions.goimpl.goimpl{}<CR>")
+	-- -- 实现go接口
+	-- keymap("n", "gI", "<cmd>lua try_require'telescope'.extensions.goimpl.goimpl{}<CR>")
 end
 
 return M

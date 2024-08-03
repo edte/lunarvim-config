@@ -54,11 +54,11 @@ M.textConfig = function()
 				enable = true,
 				-- Assign keymaps to false to disable them, e.g. `goto_definition = false`.
 				keymaps = {
-					-- goto_definition = "gm",
-					-- list_definitions = "gnD",
-					-- list_definitions_toc = "gO",
-					-- goto_next_usage = "<c-n>",
-					-- goto_previous_usage = "<c-p>",
+					goto_definition = false,
+					list_definitions = false,
+					list_definitions_toc = false,
+					goto_next_usage = false,
+					goto_previous_usage = false,
 				},
 			},
 		},

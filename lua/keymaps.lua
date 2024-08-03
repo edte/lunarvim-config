@@ -19,6 +19,10 @@ lvim.builtin.which_key.mappings["b"] = {}
 -- leader 键
 lvim.leader = "space"
 
+vim.keymap.del("", "grr", {})
+vim.keymap.del("", "gra", {})
+vim.keymap.del("", "grn", {})
+
 -- 保存文件
 keymap("", "<C-s>", ":w<cr>")
 
@@ -62,8 +66,24 @@ keymap("n", "R", "<cmd>lua vim.lsp.buf.rename()<CR>")
 keymap("n", "<bs>", "<C-^>")
 
 lvim.builtin.which_key.mappings["t"] = {
-	"<cmd>Telescope live_grep<cr>",
+	-- "<cmd>Telescope live_grep<cr>",
+	"<cmd>FzfLua live_grep_native<cr>",
 	"text",
+}
+
+local utils = require("telescope.utils")
+_G.project_files = function()
+	local _, ret, _ = utils.get_os_command_output({ "git", "rev-parse", "--is-inside-work-tree" })
+	if ret == 0 then
+		require("fzf-lua").git_files()
+	else
+		require("fzf-lua").files()
+	end
+end
+
+lvim.builtin.which_key.mappings["f"] = {
+	"<cmd>lua project_files()<cr>",
+	"recent files",
 }
 
 lvim.builtin.which_key.mappings["r"] = {
@@ -71,18 +91,24 @@ lvim.builtin.which_key.mappings["r"] = {
 	"recent files",
 }
 
-lvim.builtin.which_key.mappings["b"] = {
-	"<cmd>Telescope buffers<cr>",
-	"buffers",
+keymap("", "gd", "<cmd>Telescope lsp_definitions<cr>")
+keymap("", "gD", "<cmd>FzfLua lsp_declarations<cr>")
+keymap("", "gr", "<cmd>FzfLua lsp_references<cr>")
+
+lvim.builtin.which_key.mappings["sk"] = {
+	"<cmd>FzfLua keymaps<cr>",
+	"keymaps",
 }
 
-lvim.builtin.which_key.mappings["h"] = {
-	"<cmd>Telescope command_history<cr>",
-	"command history",
+lvim.builtin.which_key.mappings["sa"] = {
+	"<cmd>FzfLua autocmds<cr>",
+	"autocmds",
 }
 
--- 打开最近打开文件
--- keymap("n", "e", "<cmd>Telescope oldfiles<cr>")
+lvim.builtin.which_key.mappings["gs"] = {
+	"<cmd>FzfLua git_status<cr>",
+	"git status",
+}
 
 -- gd 跳转定义
 -- gf 跳转函数头

@@ -43,3 +43,10 @@ autocmd({ "BufEnter" }, {
 		vim.opt.formatoptions = vim.opt.formatoptions - { "c", "r", "o" }
 	end,
 })
+
+-- autocmd({ "VimLeave" }, {
+-- 	pattern = "*",
+-- 	callback = function()
+-- 		require("plenary.profile").stop()
+-- 	end,
+-- })

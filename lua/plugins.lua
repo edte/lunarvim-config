@@ -700,7 +700,7 @@ lvim.plugins = {
 		event = "BufRead",
 		dependencies = {
 			"nvim-telescope/telescope-project.nvim",
-			"nvim-treesitter/nvim-treesitter-refactor",
+			-- "nvim-treesitter/nvim-treesitter-refactor",
 		},
 		config = function()
 			local r = try_require("text.jump")
@@ -1270,9 +1270,13 @@ lvim.plugins = {
 		-- optional for icon support
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		config = function()
-			-- calling `setup` is optional for customization
-			-- require("fzf-lua").setup({})
-			require("fzf-lua").setup({ { "telescope", "fzf-native" }, winopts = { fullscreen = true } })
+			require("fzf-lua").setup({
+				"telescope",
+				fzf_opts = { ["--cycle"] = "" },
+				winopts = {
+					fullscreen = true,
+				},
+			})
 		end,
 	},
 
@@ -1303,5 +1307,27 @@ lvim.plugins = {
 			"nvim-lua/plenary.nvim",
 		},
 		config = true,
+	},
+
+	{
+		"romgrk/barbar.nvim",
+		dependencies = {
+			"lewis6991/gitsigns.nvim", -- OPTIONAL: for git status
+			"nvim-tree/nvim-web-devicons", -- OPTIONAL: for file icons
+		},
+		init = function()
+			vim.g.barbar_auto_setup = false
+		end,
+		opts = {
+			-- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
+			-- animation = true,
+			-- insert_at_start = true,
+			-- …etc.
+		},
+		version = "^1.0.0", -- optional: only update when a new 1.x version is released
+	},
+
+	{
+		"sam4llis/nvim-lua-gf",
 	},
 }
