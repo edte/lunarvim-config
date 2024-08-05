@@ -7,7 +7,7 @@ try_require("bigfile").setup({
 		local filetype = vim.filetype.match({ buf = bufnr })
 		-- print(file_length)
 		-- 2000 行开启大文件检测
-		if file_length > 2000 then
+		if file_length > 1500 then
 			return true
 		end
 	end,

@@ -26,6 +26,22 @@ M.textConfig = function()
 	end
 
 	c.setup({
+		highlight = {
+			enable = true,
+			language_tree = true,
+			is_supported = function()
+				-- Since `ibhagwan/fzf-lua` returns `bufnr/path` like `117/lua/plugins/colors.lua`.
+				local cur_path = (vim.fn.expand("%"):gsub("^%d+/", ""))
+				if
+					cur_path:match("term://")
+					or vim.fn.getfsize(cur_path) > 1024 * 1024 -- file size > 1 MB.
+					or vim.fn.strwidth(vim.fn.getline(".")) > 300 -- width > 300 chars.
+				then
+					return false
+				end
+				return true
+			end,
+		},
 		refactor = {
 			-- 高亮显示光标下当前符号的定义和用法。
 			highlight_definitions = {

@@ -244,20 +244,6 @@ lvim.plugins = {
 		end,
 	},
 
-	-- -- 长按j k 加速
-	-- -- 卡顿
-	{
-		"rainbowhxch/accelerated-jk.nvim",
-		config = function()
-			vim.api.nvim_set_keymap("n", "j", "<Cmd>lua require'accelerated-jk'.move_to('j')<cr>", {})
-			vim.api.nvim_set_keymap("n", "k", "<Cmd>lua require'accelerated-jk'.move_to('k')<cr>", {})
-			vim.api.nvim_set_keymap("n", "h", "<Cmd>lua require'accelerated-jk'.move_to('h')<cr>", {})
-			vim.api.nvim_set_keymap("n", "l", "<Cmd>lua require'accelerated-jk'.move_to('l')<cr>", {})
-			vim.api.nvim_set_keymap("n", "e", "<Cmd>lua require'accelerated-jk'.move_to('e')<cr>", {})
-			vim.api.nvim_set_keymap("n", "b", "<Cmd>lua require'accelerated-jk'.move_to('b')<cr>", {})
-		end,
-	},
-
 	-- {
 	-- 	"rhysd/accelerated-jk",
 	-- 	config = function()
@@ -507,7 +493,9 @@ lvim.plugins = {
 	-- lsp_lines 是一个简单的 neovim 插件，它使用真实代码行之上的虚拟行来呈现诊断。
 	--https://git.sr.ht/~whynothugo/lsp_lines.nvim
 	{
-		url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		-- url 备份
+		-- url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		url = "https://github.com/edte/lsp_lines.nvim",
 		config = function()
 			vim.diagnostic.config({
 				virtual_text = false,
@@ -1199,6 +1187,13 @@ lvim.plugins = {
 	-- 			-- large files: see https://github.com/jinh0/eyeliner.nvim/issues/41
 	-- 			max_length = 9999,
 	-- 		})
+
+	-- 		vim.g.clever_f_not_overwrites_standard_mappings = 1
+
+	-- 		vim.keymap.set({ "n", "x", "o" }, "f", function()
+	-- 			require("eyeliner").highlight({ forward = true })
+	-- 			return "<Plug>(clever-f-f)"
+	-- 		end, { expr = true })
 	-- 	end,
 	-- },
 
@@ -1310,5 +1305,36 @@ lvim.plugins = {
 	-- 		-- …etc.
 	-- 	},
 	-- 	version = "^1.0.0", -- optional: only update when a new 1.x version is released
+	-- },
+
+	-- 长按j k 加速
+	-- 卡顿
+	{
+		"rainbowhxch/accelerated-jk.nvim",
+		config = function()
+			vim.api.nvim_set_keymap("n", "j", "<Cmd>lua require'accelerated-jk'.move_to('j')<cr>", {})
+			vim.api.nvim_set_keymap("n", "k", "<Cmd>lua require'accelerated-jk'.move_to('k')<cr>", {})
+			vim.api.nvim_set_keymap("n", "h", "<Cmd>lua require'accelerated-jk'.move_to('h')<cr>", {})
+			vim.api.nvim_set_keymap("n", "l", "<Cmd>lua require'accelerated-jk'.move_to('l')<cr>", {})
+			vim.api.nvim_set_keymap("n", "e", "<Cmd>lua require'accelerated-jk'.move_to('e')<cr>", {})
+			vim.api.nvim_set_keymap("n", "b", "<Cmd>lua require'accelerated-jk'.move_to('b')<cr>", {})
+		end,
+	},
+
+	-- 在 Neovim 中更改函数参数顺序！
+	-- {
+	-- 	"SleepySwords/change-function.nvim",
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-treesitter/nvim-treesitter",
+	-- 		"nvim-treesitter/nvim-treesitter-textobjects", -- Not required, however provides fallback `textobjects.scm`
+	-- 	},
+	-- 	config = function()
+	-- 		local change_function = require("change-function")
+	-- 		change_function.setup({})
+	-- 		vim.api.nvim_set_keymap("n", "<leader>lR", "", {
+	-- 			callback = change_function.change_function,
+	-- 		})
+	-- 	end,
 	-- },
 }
