@@ -15,6 +15,10 @@ vim.keymap.del("", "grn", {})
 
 -- vim.cmd("nmap <tab> %")
 
+keymap("n", "}", "}w")
+keymap("n", "}", "}j")
+cmd("nnoremap <expr><silent> { (col('.')==1 && len(getline(line('.')-1))==0? '2{j' : '{j')")
+
 -- -- 上下滚动浏览
 keymap("", "<C-j>", "5j")
 keymap("", "<C-k>", "5k")
