@@ -71,16 +71,16 @@ M.config = function()
 				["i;"] = "textsubjects-container-inner",
 			},
 		},
-		-- gf 跳函数开头
-		textobjects = {
-			move = {
-				enable = true,
-				set_jumps = true,
-				goto_previous_start = {
-					["gf"] = { query = { "@function.outer" } },
-				},
-			},
-		},
+		-- -- gf 跳函数开头
+		-- textobjects = {
+		-- 	move = {
+		-- 		enable = true,
+		-- 		set_jumps = true,
+		-- 		goto_previous_start = {
+		-- 			["gf"] = { query = { "@function.outer" } },
+		-- 		},
+		-- 	},
+		-- },
 		matchup = {
 			enable = true, -- mandatory, false will disable the whole extension
 		},

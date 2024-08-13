@@ -11,7 +11,7 @@ M.goConfig = function()
 
 	-- gn生成返回值
 	-- keymap("", "gn", "<Cmd>GoGenReturn<cr>")
-	-- -- gf填充struct
+	-- -- gt填充struct
 	-- keymap("", "gt", "<Cmd>GoFillStruct<cr>")
 
 	Create_cmd("GoAddTagEmpty", function()
