@@ -1,18 +1,22 @@
--- 主题设置
--- lvim.colorscheme = "onedark"
--- lvim.colorscheme = "onedarker"
--- lvim.colorscheme = "tokyonight"
+local M = {}
 
--- lvim.colorscheme = "catppuccin"
+M.config = function()
+	-- 主题设置
+	-- lvim.colorscheme = "onedark"
+	-- lvim.colorscheme = "onedarker"
+	-- lvim.colorscheme = "tokyonight"
 
--- lvim.colorscheme = "kanagawa"
--- lvim.colorscheme = "gruvbox"
--- lvim.colorscheme = "github_dark_dimmed"
--- lvim.colorscheme = "catppuccin-macchiato"
--- lvim.colorscheme = "onedark"
+	-- lvim.colorscheme = "catppuccin"
 
--- try_require('onedark').load()
+	-- lvim.colorscheme = "kanagawa"
+	-- lvim.colorscheme = "gruvbox"
+	-- lvim.colorscheme = "github_dark_dimmed"
+	-- lvim.colorscheme = "catppuccin-macchiato"
+	-- lvim.colorscheme = "onedark"
 
-lvim.builtin.telescope.theme = "center"
+	-- try_require('onedark').load()
 
--- vim.cmd [[colorscheme tokyonight]]
+	-- vim.cmd [[colorscheme tokyonight]]
+end
+
+return M

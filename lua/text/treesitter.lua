@@ -1,31 +1,15 @@
-vim.g.skip_ts_context_commentstring_module = true
-lvim.builtin.treesitter.matchup.enable = true
-
--- -- 上下滚动浏览
-keymap("", "<C-j>", "5j")
-keymap("", "<C-k>", "5k")
-
--- vim.cmd("nmap <tab> %")
-
-require("telescope").setup({
-	defaults = {
-		file_ignore_patterns = {
-			"node_modules",
-			".git",
-		},
-	},
-})
-
-lvim.builtin.telescope.pickers.buffers.initial_mode = "insert"
-
 local M = {}
-M.textConfig = function()
-	local c = try_require("nvim-treesitter.configs")
-	if c == nil then
+M.config = function()
+	vim.g.skip_ts_context_commentstring_module = true
+	lvim.builtin.treesitter.matchup.enable = true
+	lvim.builtin.telescope.theme = "center"
+
+	local config = try_require("nvim-treesitter.configs")
+	if config == nil then
 		return
 	end
 
-	c.setup({
+	config.setup({
 		highlight = {
 			enable = true,
 			language_tree = true,
@@ -78,16 +62,6 @@ M.textConfig = function()
 				},
 			},
 		},
-	})
-end
-
-M.textsubjectsConfig = function()
-	local c = try_require("nvim-treesitter.configs")
-	if c == nil then
-		return
-	end
-
-	c.setup({
 		textsubjects = {
 			enable = true,
 			prev_selection = ",",
@@ -97,15 +71,46 @@ M.textsubjectsConfig = function()
 				["i;"] = "textsubjects-container-inner",
 			},
 		},
-	})
-end
+		-- gf 跳函数开头
+		textobjects = {
+			move = {
+				enable = true,
+				set_jumps = true,
+				goto_previous_start = {
+					["gf"] = { query = { "@function.outer" } },
+				},
+			},
+		},
+		matchup = {
+			enable = true, -- mandatory, false will disable the whole extension
+		},
 
-M.contextConfig = function()
-	local c = try_require("treesitter-context")
-	if c == nil then
+		-- pair
+		pairs = {
+			enable = true,
+			disable = {},
+			highlight_pair_events = {}, -- e.g. {"CursorMoved"}, -- when to highlight the pairs, use {} to deactivate highlighting
+			highlight_self = false, -- whether to highlight also the part of the pair under cursor (or only the partner)
+			goto_right_end = false, -- whether to go to the end of the right partner or the beginning
+			fallback_cmd_normal = "call matchit#Match_wrapper('',1,'n')", -- What command to issue when we can't find a pair (e.g. "normal! %")
+			keymaps = {
+				goto_partner = "<leader>%",
+				delete_balanced = "X",
+			},
+			delete_balanced = {
+				only_on_first_char = false, -- whether to trigger balanced delete when on first character of a pair
+				fallback_cmd_normal = nil, -- fallback command when no pair found, can be nil
+				longest_partner = false, -- whether to delete the longest or the shortest pair when multiple found.
+				-- E.g. whether to delete the angle bracket or whole tag in  <pair> </pair>
+			},
+		},
+	})
+
+	local context = try_require("treesitter-context")
+	if context == nil then
 		return
 	end
-	c.setup({
+	context.setup({
 		enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
 		max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
 		min_window_height = 1, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
@@ -119,31 +124,11 @@ M.contextConfig = function()
 		zindex = 1, -- The Z-index of the context window
 		on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
 	})
-end
 
--- gf 跳函数开头
-local c = try_require("nvim-treesitter.configs")
-if c == nil then
-	return
-end
-c.setup({
-	textobjects = {
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_previous_start = {
-				["gf"] = { query = { "@function.outer" } },
-			},
-		},
-	},
-	matchup = {
-		enable = true, -- mandatory, false will disable the whole extension
-	},
-})
-
-local co = try_require("ts_context_commentstring")
-if co ~= nil then
-	co.setup({})
+	-- 跳转到上下文（向上）
+	vim.keymap.set("n", "gc", function()
+		require("treesitter-context").go_to_context(vim.v.count1)
+	end, { silent = true })
 end
 
 return M

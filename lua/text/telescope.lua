@@ -1,17 +1,7 @@
--------------------------------------------------keymap------------------------------------------------------------
-
 local M = {}
 
-M.searchConfig = function()
-	-- 按 esc 消除上一次的高亮
-	keymap("n", "<esc>", ":noh<cr>")
-
-	-- 跳转搜索，类似于 acejump
-	-- map("", "f", ":HopPattern<CR>", opt)
-
-	--------------------------------------------------------------------------------------------------------
-
-	-- telescope
+M.config = function()
+	lvim.builtin.telescope.pickers.buffers.initial_mode = "insert"
 
 	--  隐藏文件和目录中的文件和文本搜索
 	local telescope = try_require("telescope")
@@ -42,6 +32,10 @@ M.searchConfig = function()
 			vimgrep_arguments = vimgrep_arguments,
 			preview = {
 				filesize_limit = 0.1, -- MB
+			},
+			file_ignore_patterns = {
+				"node_modules",
+				".git",
 			},
 		},
 		pickers = {

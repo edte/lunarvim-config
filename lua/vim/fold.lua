@@ -1,9 +1,3 @@
---
-vim.o.foldlevelstart = 99
-vim.o.foldenable = true
-vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
-vim.o.foldcolumn = "1"
-
 local M = {}
 
 -- 延迟加载
@@ -12,6 +6,11 @@ M.foldConfig = function()
 	if ufo == nil then
 		return
 	end
+
+vim.o.foldlevelstart = 99
+vim.o.foldenable = true
+vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+vim.o.foldcolumn = "1"
 
 	local ftMap = {
 		vim = "indent",

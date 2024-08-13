@@ -1,11 +1,10 @@
--- 自动安装 lsp
-lvim.lsp.installer.setup.automatic_installation = true
-
 ---------------------------------------------------lsp-----------------------------------------------------------------------------------
 
 local M = {}
 
 M.lspConfig = function()
+-- 自动安装 lsp
+lvim.lsp.installer.setup.automatic_installation = true
 	local lspconfig = try_require("lspconfig")
 	if lspconfig == nil then
 		return
@@ -187,7 +186,7 @@ M.lspConfig = function()
 	-- rime 输入法
 
 	local rime_on_attach = function(client, _)
-		require("code.rime").create_command_toggle_rime(client)
+		require("cmp.rime").create_command_toggle_rime(client)
 	end
 
 	-- nvim-cmp supports additional completion capabilities, so broadcast that to servers

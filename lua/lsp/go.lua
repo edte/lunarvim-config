@@ -14,7 +14,7 @@ M.goConfig = function()
 	-- -- gf填充struct
 	-- keymap("", "gt", "<Cmd>GoFillStruct<cr>")
 
-	create_cmd("GoAddTagEmpty", function()
+	Create_cmd("GoAddTagEmpty", function()
 		vim.api.nvim_command(":GoAddTag json -add-options json=")
 	end, { nargs = "*" })
 end

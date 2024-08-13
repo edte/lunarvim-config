@@ -40,10 +40,10 @@ function keymap(mode, lhs, rhs)
 	vim.api.nvim_set_keymap(mode, lhs, rhs, opt)
 end
 
-create_cmd = vim.api.nvim_create_user_command
+Create_cmd = vim.api.nvim_create_user_command
 
 cmd = vim.cmd
 
-autocmd = vim.api.nvim_create_autocmd
+Autocmd = vim.api.nvim_create_autocmd
 
-del_cmd = vim.api.nvim_del_user_command
+Del_cmd = vim.api.nvim_del_user_command
