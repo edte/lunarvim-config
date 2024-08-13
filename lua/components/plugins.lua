@@ -197,8 +197,8 @@ M.list = {
 			require("hardtime").setup({
 				disable_mouse = false,
 				restricted_keys = {
-					["j"] = {},
-					["k"] = {},
+					-- ["j"] = {},
+					-- ["k"] = {},
 				},
 				disabled_keys = {
 					["<Up>"] = {},
