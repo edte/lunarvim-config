@@ -182,19 +182,6 @@ M.list = {
 	-- 	end,
 	-- },
 
-	-- https://github.com/OXY2DEV/helpview.nvim
-	-- {
-	-- 	"OXY2DEV/helpview.nvim",
-	-- 	lazy = false, -- Recommended
-
-	-- 	-- In case you still want to lazy load
-	-- 	-- ft = "help",
-
-	-- 	dependencies = {
-	-- 		"nvim-treesitter/nvim-treesitter",
-	-- 	},
-	-- },
-
 	-- precognition.nvim - 预识别使用虚拟文本和装订线标志来显示可用的动作。
 	-- Precognition toggle
 	-- {

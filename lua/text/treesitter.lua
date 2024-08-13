@@ -71,16 +71,59 @@ M.config = function()
 				["i;"] = "textsubjects-container-inner",
 			},
 		},
-		-- -- gf 跳函数开头
-		-- textobjects = {
-		-- 	move = {
-		-- 		enable = true,
-		-- 		set_jumps = true,
-		-- 		goto_previous_start = {
-		-- 			["gf"] = { query = { "@function.outer" } },
-		-- 		},
-		-- 	},
-		-- },
+		-- gf 跳函数开头
+		textobjects = {
+			-- 文本对象：移动
+			move = {
+				enable = true,
+				set_jumps = true,
+
+				goto_next_start = {
+					["]m"] = "@function.outer",
+					["]]"] = { query = "@class.outer", desc = "Next class start" },
+				},
+				goto_next_end = {
+					["]M"] = "@function.outer",
+					["]["] = "@class.outer",
+				},
+				goto_previous_start = {
+					["[m"] = "@function.outer",
+					["[["] = "@class.outer",
+				},
+				goto_previous_end = {
+					["[M"] = "@function.outer",
+					["[]"] = "@class.outer",
+				},
+			},
+
+			-- 文本对象：选择
+			select = {
+				enable = true,
+				keymaps = {
+					-- You can use the capture groups defined in textobjects.scm
+					["af"] = "@function.outer",
+					["if"] = "@function.inner",
+					["ac"] = "@class.outer",
+					-- You can optionally set descriptions to the mappings (used in the desc parameter of
+					-- nvim_buf_set_keymap) which plugins like which-key display
+					["ic"] = { query = "@class.inner", desc = "Select inner part of a class region" },
+					-- You can also use captures from other query groups like `locals.scm`
+					["as"] = { query = "@scope", query_group = "locals", desc = "Select language scope" },
+				},
+			},
+
+			-- 文本对象：交换
+			swap = {
+				enable = false,
+				swap_next = {
+					["<leader>a"] = "@parameter.inner",
+				},
+				swap_previous = {
+					["<leader>A"] = "@parameter.inner",
+				},
+			},
+		},
+
 		matchup = {
 			enable = true, -- mandatory, false will disable the whole extension
 		},
@@ -112,12 +155,12 @@ M.config = function()
 	end
 	context.setup({
 		enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
-		max_lines = 1, -- How many lines the window should span. Values <= 0 mean no limit.
+		max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
 		min_window_height = 1, -- Minimum editor window height to enable context. Values <= 0 mean no limit.
 		line_numbers = true,
 		multiline_threshold = 1, -- Maximum number of lines to show for a single context
 		trim_scope = "outer", -- Which context lines to discard if `max_lines` is exceeded. Choices: 'inner', 'outer'
-		mode = "cursor", -- Line used to calculate context. Choices: 'cursor', 'topline'
+		mode = "topline", -- Line used to calculate context. Choices: 'cursor', 'topline'
 		-- Separator between context and content. Should be a single character string, like '-'.
 		-- When separator is set, the context will only show up when there are at least 2 lines above cursorline.
 		separator = nil,
@@ -126,9 +169,23 @@ M.config = function()
 	})
 
 	-- 跳转到上下文（向上）
-	vim.keymap.set("n", "gc", function()
+	vim.keymap.set("n", "[c", function()
 		require("treesitter-context").go_to_context(vim.v.count1)
 	end, { silent = true })
+
+	-- 一个微型 Neovim 插件，用于处理树木保护单位。一个单元被定义为一个包含其所有子节点的树节点。它允许您快速选择、拉取、删除或替换特定于语言的范围。
+
+	-- 对于内部选择，将选择光标下的主节点。对于外部选择，选择下一个节点。
+
+	local unit = try_require("treesitter-unit")
+	if unit == nil then
+		return
+	end
+
+	vim.api.nvim_set_keymap("x", "iu", ':lua require"treesitter-unit".select()<CR>', { noremap = true })
+	vim.api.nvim_set_keymap("x", "au", ':lua require"treesitter-unit".select(true)<CR>', { noremap = true })
+	vim.api.nvim_set_keymap("o", "iu", ':<c-u>lua require"treesitter-unit".select()<CR>', { noremap = true })
+	vim.api.nvim_set_keymap("o", "au", ':<c-u>lua require"treesitter-unit".select(true)<CR>', { noremap = true })
 end
 
 return M

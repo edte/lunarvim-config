@@ -28,3 +28,5 @@ vim.o.hidden = true
 -- -- tab 的空格数
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
+
+vim.o.scrolloff = 0

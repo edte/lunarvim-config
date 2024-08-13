@@ -33,6 +33,11 @@ M.list = {
 				event = { "User FileOpened" },
 				after = "nvim-treesitter",
 			},
+			{
+				"David-Kunz/treesitter-unit",
+				event = { "User FileOpened" },
+				after = "nvim-treesitter",
+			},
 		},
 		config = function()
 			local r = try_require("text.treesitter")
@@ -168,6 +173,27 @@ M.list = {
 			})
 		end,
 	},
+
+	-- Telescope.nvim 扩展程序可在从编辑历史记录中选择文件时提供智能优先级。
+	-- :Telescope frecency
+	-- " Use a specific workspace tag:
+	-- :Telescope frecency workspace=CWD
+	-- " You can use with telescope's options
+	-- :Telescope frecency workspace=CWD path_display={"shorten"} theme=ivy
+	{
+		"nvim-telescope/telescope-frecency.nvim",
+		config = function()
+			require("telescope").load_extension("frecency")
+		end,
+	},
+
+	-- 暂时没用到过
+	-- 🚦 漂亮的诊断、参考、望远镜结果、快速修复和位置列表，可帮助您解决代码造成的所有问题。
+	-- {
+	-- 	"folke/trouble.nvim",
+	-- 	opts = {}, -- for default options, refer to the configuration section for custom setup.
+	-- 	cmd = "Trouble",
+	-- },
 }
 
 require("text.bigfile").config()

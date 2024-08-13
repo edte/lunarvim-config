@@ -26,13 +26,73 @@ M.list = {
 	-- 不是天空中的 UFO，而是 Neovim 中的超级折叠。 za
 	{
 		"kevinhwang91/nvim-ufo",
-		keys = { "za", "z" },
 		dependencies = "kevinhwang91/promise-async",
-		config = function()
-			local r = try_require("vim.fold")
-			if r ~= nil then
-				r.foldConfig()
+		event = "VeryLazy",
+		opts = {
+			-- INFO: Uncomment to use treeitter as fold provider, otherwise nvim lsp is used
+			-- provider_selector = function(bufnr, filetype, buftype)
+			--   return { "treesitter", "indent" }
+			-- end,
+			open_fold_hl_timeout = 400,
+			close_fold_kinds = { "imports", "comment" },
+			preview = {
+				win_config = {
+					border = { "", "─", "", "", "", "─", "", "" },
+					-- winhighlight = "Normal:Folded",
+					winblend = 0,
+				},
+				mappings = {
+					scrollU = "<C-u>",
+					scrollD = "<C-d>",
+					jumpTop = "[",
+					jumpBot = "]",
+				},
+			},
+		},
+		init = function()
+			vim.o.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+			vim.o.foldcolumn = "1" -- '0' is not bad
+			vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+			vim.o.foldlevelstart = 99
+			vim.o.foldenable = true
+		end,
+		config = function(_, opts)
+			local handler = function(virtText, lnum, endLnum, width, truncate)
+				local newVirtText = {}
+				local totalLines = vim.api.nvim_buf_line_count(0)
+				local foldedLines = endLnum - lnum
+				local suffix = (" 󰁂 %d "):format(endLnum - lnum)
+				local sufWidth = vim.fn.strdisplaywidth(suffix)
+				local targetWidth = width - sufWidth
+				local curWidth = 0
+				for _, chunk in ipairs(virtText) do
+					local chunkText = chunk[1]
+					local chunkWidth = vim.fn.strdisplaywidth(chunkText)
+					if targetWidth > curWidth + chunkWidth then
+						table.insert(newVirtText, chunk)
+					else
+						chunkText = truncate(chunkText, targetWidth - curWidth)
+						local hlGroup = chunk[2]
+						table.insert(newVirtText, { chunkText, hlGroup })
+						chunkWidth = vim.fn.strdisplaywidth(chunkText)
+						-- str width returned from truncate() may less than 2nd argument, need padding
+						if curWidth + chunkWidth < targetWidth then
+							suffix = suffix .. (" "):rep(targetWidth - curWidth - chunkWidth)
+						end
+						break
+					end
+					curWidth = curWidth + chunkWidth
+				end
+				local rAlignAppndx =
+					math.max(math.min(vim.api.nvim_win_get_width(0), width - 1) - curWidth - sufWidth, 0)
+				suffix = (" "):rep(rAlignAppndx) .. suffix
+				table.insert(newVirtText, { suffix, "MoreMsg" })
+				return newVirtText
 			end
+			opts["fold_virt_text_handler"] = handler
+			require("ufo").setup(opts)
+			vim.keymap.set("n", "zr", require("ufo").openAllFolds)
+			vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
 		end,
 	},
 
@@ -285,6 +345,49 @@ M.list = {
 	-- 		end, { expr = true })
 	-- 	end,
 	-- },
+
+	-- 在 Vim 中，在字符上按 ga 显示其十进制、八进制和十六进制表示形式。 Characterize.vim 通过以下补充对其进行了现代化改造：
+	-- Unicode 字符名称： U+00A9 COPYRIGHT SYMBOL
+	-- Vim 二合字母（在 <C-K> 之后键入以插入字符）： Co , cO
+	-- 表情符号代码：： :copyright:
+	-- HTML 实体： &copy;
+	{
+		"tpope/vim-characterize",
+	},
+
+	-- 一个实用插件，可扩展 Lua 文件中的“gf”功能。
+	-- gf 打开文件
+	{
+		"sam4llis/nvim-lua-gf",
+	},
+
+	-- neovim 插件将文件路径和光标所在行复制到剪贴板
+	{
+		"diegoulloao/nvim-file-location",
+		config = function()
+			require("nvim-file-location").setup({
+				keymap = "yP",
+				mode = "absolute",
+				add_line = false,
+				add_column = false,
+				default_register = "*",
+			})
+		end,
+	},
+
+	-- Neovim 中 vimdoc/帮助文件的装饰
+	-- https://github.com/OXY2DEV/helpview.nvim
+	{
+		"OXY2DEV/helpview.nvim",
+		lazy = false, -- Recommended
+
+		-- In case you still want to lazy load
+		-- ft = "help",
+
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+	},
 }
 
 return M

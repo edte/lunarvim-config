@@ -76,6 +76,14 @@ keymap("n", "gh", "<CMD>ClangdSwitchSourceHeader<CR>")
 keymap("n", "<c-p>", "<cmd>lua vim.diagnostic.goto_prev()<cr>") -- pre error
 keymap("n", "<c-n>", "<cmd>lua vim.diagnostic.goto_next()<cr>") -- next error
 
+-- gqn/gqj 自带的格式化
+-- gm 跳屏幕中央
+-- ga 显示字符编码
+-- gs 等待重新映射
+-- gv 最后的视觉选择
+-- gi 上一个插入点
+-- g* 类似于“*”，但不使用“\<”和“\>”
+
 --------------------------------------------------------------screen ------------------------------------------------
 ------------------------------------------------------------------
 --                          分屏
