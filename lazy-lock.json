@@ -72,7 +72,6 @@
   "nvim-lua-gf": { "branch": "main", "commit": "ca712497b2bab6351518917be219e9bfd8d63e4f" },
   "nvim-navic": { "branch": "master", "commit": "8649f694d3e76ee10c19255dece6411c29206a54" },
   "nvim-recorder": { "branch": "main", "commit": "2b307756704a0ba26e8a3adfe98d02eeaecaa52e" },
-  "nvim-rooter.lua": { "branch": "main", "commit": "36c597962c5f136d6230f53837ff14fcaf81eff7" },
   "nvim-spider": { "branch": "main", "commit": "508b3504a350fb9a93bd0b7c0d41b8b5fc732b5e" },
   "nvim-surround": { "branch": "main", "commit": "ec2dc7671067e0086cdf29c2f5df2dd909d5f71f" },
   "nvim-tree.lua": { "branch": "master", "commit": "2bc725a3ebc23f0172fb0ab4d1134b81bcc13812" },

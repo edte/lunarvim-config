@@ -1,26 +1,6 @@
 local M = {}
 
 M.list = {
-	{
-		"notjedi/nvim-rooter.lua",
-		config = function()
-			require("nvim-rooter").setup()
-		end,
-		priority = 100,
-	},
-	-- 自动切换cwd
-	-- 方便fzflua，arrow，bookmark等插件使用
-	-- {
-	-- 	"ahmedkhalf/project.nvim",
-	-- 	config = function()
-	-- 		require("project_nvim").setup({
-	-- 			-- your configuration comes here
-	-- 			-- or leave it empty to use the default settings
-	-- 			-- refer to the configuration section below
-	-- 		})
-	-- 	end,
-	-- },
-
 	-- 文件mark，按git隔离
 	-- 保存目录 /Users/edte/.cache/lvim/arrow
 	{
@@ -42,7 +22,6 @@ M.list = {
 	-- ~/.local/share/nvim/bookmarks/
 	{
 		"crusj/bookmarks.nvim",
-		-- keys = { "m" },
 		branch = "main",
 		dependencies = {
 			"nvim-web-devicons",
