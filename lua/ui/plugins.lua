@@ -47,6 +47,17 @@ M.list = {
 			options = {
 				use_as_default_explorer = false,
 			},
+			-- Customization of explorer windows
+			windows = {
+				-- Maximum number of windows to show side by side
+				max_number = math.huge,
+				-- Whether to show preview of file/directory under cursor
+				preview = false,
+				-- Width of focused window
+				width_focus = 200,
+				-- Width of non-focused window
+				width_nofocus = 100,
+			},
 		},
 		keys = {
 			{
@@ -74,7 +85,6 @@ M.list = {
 			lvim.builtin.nvimtree.active = false
 			lvim.builtin.nvimtree.setup.view.side = "left"
 			lvim.builtin.nvimtree.setup.renderer.icons.show.git = false
-
 		end,
 	},
 
@@ -114,9 +124,7 @@ M.list = {
 	{
 		"edte/lualine-ext",
 	},
-
 }
-
 
 function ToggleMiniFiles()
 	local mf = require("mini.files")

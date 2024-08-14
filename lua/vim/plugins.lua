@@ -388,6 +388,17 @@ M.list = {
 			"nvim-treesitter/nvim-treesitter",
 		},
 	},
+	{
+		"phaazon/hop.nvim",
+		branch = "v2", -- optional but strongly recommended
+		config = function()
+			require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
+			local hop = require("hop")
+			vim.keymap.set("", "<M-m>", function()
+				hop.hint_char1()
+			end, { remap = true })
+		end,
+	},
 }
 
 return M

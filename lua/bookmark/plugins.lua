@@ -1,6 +1,26 @@
 local M = {}
 
 M.list = {
+	{
+		"notjedi/nvim-rooter.lua",
+		config = function()
+			require("nvim-rooter").setup()
+		end,
+		priority = 100,
+	},
+	-- 自动切换cwd
+	-- 方便fzflua，arrow，bookmark等插件使用
+	-- {
+	-- 	"ahmedkhalf/project.nvim",
+	-- 	config = function()
+	-- 		require("project_nvim").setup({
+	-- 			-- your configuration comes here
+	-- 			-- or leave it empty to use the default settings
+	-- 			-- refer to the configuration section below
+	-- 		})
+	-- 	end,
+	-- },
+
 	-- 文件mark，按git隔离
 	-- 保存目录 /Users/edte/.cache/lvim/arrow
 	{
@@ -11,19 +31,22 @@ M.list = {
 			leader_key = "`", -- Recommended to be a single key
 			-- buffer_leader_key = "m", -- Per Buffer Mappings
 			index_keys = "123456789zxcbnmZXVBNM,afghjklAFGHJKLwrtyuiopWRTYUIOP", -- keys mapped to bookmark index, i.e. 1st bookmark will be accessible by 1, and 12th - by c
-			save_key = "cwd", -- what will be used as root to save the bookmarks. Can be also `git_root`.
+			save_key = "git_root", -- what will be used as root to save the bookmarks. Can be also `git_root`.
 			hide_handbook = true,
 			always_show_path = true,
 		},
 	},
 
 	-- echo stdpath("data")
+	-- /Users/edte/.local/share/lvim
 	-- ~/.local/share/nvim/bookmarks/
 	{
 		"crusj/bookmarks.nvim",
 		-- keys = { "m" },
 		branch = "main",
-		dependencies = { "nvim-web-devicons" },
+		dependencies = {
+			"nvim-web-devicons",
+		},
 		config = function()
 			require("bookmarks").setup({
 				storage_dir = "", -- Default path: vim.fn.stdpath("data").."/bookmarks,  if not the default directory, should be absolute path",

@@ -29,4 +29,4 @@ cmd("silent!")
 -- cmd("nnoremap * #")
 
 cmd("command! Pwd !ls %:p")
--- cmd("command! Pwd lua print(vim.fn.getcwd())")
+cmd("command! Cwd lua print(vim.fn.getcwd())")
