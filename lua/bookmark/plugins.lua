@@ -58,6 +58,9 @@ M.list = {
 				fix_enable = true,
 			})
 			require("telescope").load_extension("bookmarks")
+			keymap("n", "mm", "<cmd>lua require'bookmarks'.add_bookmarks(fasle)<cr>")
+			keymap("n", "mo", "<cmd>Telescope bookmarks<cr>")
+			keymap("n", "mD", "<cmd>lua require'bookmarks.list'.delete_on_virt()<cr>")
 		end,
 	},
 
@@ -111,10 +114,6 @@ M.list = {
 					-- preview = "m:",
 				},
 			})
-
-			keymap("n", "mm", "<cmd>lua require'bookmarks'.add_bookmarks(fasle)<cr>")
-			keymap("n", "mo", "<cmd>Telescope bookmarks<cr>")
-			keymap("n", "mD", "<cmd>lua require'bookmarks.list'.delete_on_virt()<cr>")
 		end,
 	},
 }

@@ -93,6 +93,17 @@ M.list = {
 			require("ufo").setup(opts)
 			vim.keymap.set("n", "zr", require("ufo").openAllFolds)
 			vim.keymap.set("n", "zm", require("ufo").closeFoldsWith) -- closeAllFolds == closeFoldsWith(0)
+
+			vim.cmd([[set viewoptions-=curdir]])
+
+			-- remember folds
+			vim.cmd([[
+augroup remember_folds
+  autocmd!
+  autocmd BufWinLeave *.* mkview
+  autocmd BufWinEnter *.* silent! loadview
+augroup END
+]])
 		end,
 	},
 
