@@ -2,7 +2,6 @@ local M = {}
 M.config = function()
 	vim.g.skip_ts_context_commentstring_module = true
 	lvim.builtin.treesitter.matchup.enable = true
-	lvim.builtin.telescope.theme = "center"
 
 	local config = try_require("nvim-treesitter.configs")
 	if config == nil then

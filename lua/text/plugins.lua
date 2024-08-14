@@ -199,5 +199,6 @@ M.list = {
 require("text.bigfile").config()
 require("text.diff").config()
 require("text.input").config()
+require("text.telescope").config()
 
 return M

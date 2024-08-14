@@ -2,6 +2,7 @@ local M = {}
 
 M.config = function()
 	lvim.builtin.telescope.pickers.buffers.initial_mode = "insert"
+	lvim.builtin.telescope.theme = "center"
 
 	--  隐藏文件和目录中的文件和文本搜索
 	local telescope = try_require("telescope")
@@ -15,7 +16,7 @@ M.config = function()
 		return
 	end
 
-	telescope.load_extension("project")
+	-- telescope.load_extension("project")
 
 	-- Clone the default Telescope configuration
 	local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
