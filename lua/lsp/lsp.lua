@@ -133,7 +133,7 @@ M.lspConfig = function()
 		-- 跨文件重命名变量
 		-- "--cross-file-rename",
 		-- 设置verbose时，会把编译命令和索引构建结果，占用内存等信息都打印出来，需要检查索引构建失败原因时，可以设置为verbose, error
-		"--log=verbose",
+		"--log=error",
 		-- 输出的 JSON 文件更美观
 		"--pretty",
 		-- 输入建议中，已包含头文件的项与还未包含头文件的项会以圆点加以区分
